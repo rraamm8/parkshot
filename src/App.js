@@ -18,11 +18,11 @@ function App() {
                          flex justify-between items-center
                          bg-slate-200'>
           <p className='text-2xl font-bold p-5'>
-            PARKSHOT
+            <h1>PARKSHOT</h1>
           </p>
           <ul className='flex justify-center items-center text-xl font-bold'>
             <li className='mx-4 p-2 hover:bg-slate-700 hover:text-white rounded-md'>
-              <Link to='/'>?</Link>
+              <Link to='/'>홈페이지</Link>
             </li>
             <li className='mx-4 p-2 hover:bg-slate-700 hover:text-white rounded-md'>
               <Link to='/map'>코스 찾기</Link>
@@ -59,7 +59,7 @@ function App() {
             <Route path='/community' element={<Community />} />
             <Route path='/score' element={<Score />} />
             <Route path='/contact' element={<Contact />} />
-
+            {/* <Map /> */}
           </Routes>
         </main>
         <footer className='w-full h-20 flex-shrink-0

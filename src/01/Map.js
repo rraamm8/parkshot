@@ -1,8 +1,10 @@
+import Kakao from './Kakao';
+
 function Map(){
 
     return (
         <div>
-        운영 중
+        <Kakao />
         </div>
     );
 }
