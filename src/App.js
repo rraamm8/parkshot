@@ -18,7 +18,7 @@ function App() {
                          flex justify-between items-center
                          bg-slate-200'>
           <p className='text-2xl font-bold p-5'>
-            <h1>PARKSHOT</h1>
+            <strong>PARKSHOT</strong>
           </p>
           <ul className='flex justify-center items-center text-xl font-bold'>
             <li className='mx-4 p-2 hover:bg-slate-700 hover:text-white rounded-md'>
