@@ -1,8 +1,8 @@
 package com.parkshot.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,14 +16,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Member {
-	@Id
-	private String member_id;
-	
-	private String name;
-	private String password;
-	@Enumerated(EnumType.STRING)
-	private Role role;
-	private boolean enabled;
+public class Hole {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer holeId;
+    private Integer courseId;
+    private String holeName;
+    private Integer par;
+    private Integer distance;
+
+   
 }

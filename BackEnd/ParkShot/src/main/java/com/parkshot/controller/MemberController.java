@@ -6,10 +6,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class LoginController {
+public class MemberController {
 	@GetMapping("/login")
 	public void login() {
 		System.out.println("login 요청");
@@ -41,5 +43,10 @@ public class LoginController {
 		
 		return "OAuth2 : " + user;
 	}
+	
+//	@PostMapping("/register")
+//	public String Register(@RequestBody UserRequest request) {
+//		
+//	}
 	
 }
