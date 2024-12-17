@@ -1,0 +1,131 @@
+/* 전체 컨테이너 스타일 */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 화면 전체 높이 */
+  background-color: #fff; /* 배경 색상 */
+}
+
+/* 제목 스타일 */
+.signup-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #000;
+}
+
+/* 버튼 컨테이너 */
+.signup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* 버튼 간격 */
+}
+
+/* 기본 버튼 스타일 */
+.signup-btn {
+  width: 300px;
+  padding: 15px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* 각 버튼의 색상 */
+.signup-btn.email {
+  background-color: #9e9e9e; /* 회색 */
+}
+
+.signup-btn.naver {
+  background-color: #03c75a; /* 네이버 녹색 */
+}
+
+.signup-btn.kakao {
+  background-color: #fee500; /* 카카오 노란색 */
+  color: #000; /* 글자 색상 검정 */
+}
+
+.signup-btn.google {
+  background-color: #4285f4; /* 구글 파란색 */
+}
+
+/* 전체 컨테이너 스타일 */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 화면 전체 높이 */
+  background-color: #fff;
+}
+
+/* 제목 스타일 */
+.signup-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #000;
+}
+
+/* 입력 폼 그룹 */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 입력 그룹 간격 */
+}
+
+/* 입력 필드와 버튼을 묶는 그룹 */
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 입력 필드와 버튼 간격 */
+}
+
+/* 입력 필드 스타일 */
+.signup-input {
+  width: 300px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* 중복확인 버튼 스타일 */
+.confirm-btn {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #4285f4; /* 파란색 */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm-btn:hover {
+  background-color: #3367d6; /* 호버 시 어두운 파란색 */
+}
+
+/* 회원가입 버튼 스타일 */
+.submit-btn {
+  width: 300px;
+  max-width: 330px;
+  padding: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #4285f4; /* 파란색 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  background-color: #3367d6; /* 호버 시 어두운 파란색 */
+}

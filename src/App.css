@@ -1,3 +1,8 @@
+.p1 {
+  color: beige;
+  font-weight: bold;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +40,62 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Header 영역 */
+.header {
+  position: fixed; /* 상단에 고정 */
+  top: 0; /* 화면 위쪽에 붙임 */
+  left: 0;
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #000000;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn,
+.signup {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #3b82f6;
+  cursor: pointer;
+}
+
+.signup {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.login-btn {
+  background-color: transparent;
+  color: #3b82f6;
 }
