@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css'; // CSS 파일 불러오기
@@ -47,3 +48,4 @@ function Home() {
 }
 
 export default Home;
+
