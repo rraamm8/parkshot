@@ -1,27 +1,24 @@
-import { useEffect } from 'react';
+import React from 'react';
+import { Container as MapDiv, NaverMap, Marker, useNavermaps } from 'react-naver-maps';
+import './Map.css';
 
 function Map() {
-    const mapRef = useRef(null);
-    const lat = 33.450701 // 위도 숫자로 넣어주기
-    const lng = 126.570667 // 경도 숫자로 넣어주기
-    
-    useEffect(() => {
-      const { naver } = window;
-      if (mapRef.current && naver) {
-        const location = new naver.maps.LatLng(lat, lng);
-        const map = new naver.maps.Map(mapRef.current, {
-          center: location,
-          zoom: 17, // 지도 확대 정도
-        });
-        new naver.maps.Marker({
-          position: location,
-          map,
-        });
-      }
-    }, []);
-    
-    return (
-       <div ref={mapRef} style={{ width: "500px", height: "500px" }}></div>
-    );
+  const navermaps = useNavermaps();
+
+  return (
+    <div className="map-container">
+      <MapDiv className="map-wrapper">
+        <NaverMap
+          defaultCenter={new navermaps.LatLng(35.2333798, 129.0798453)} // 부산대 좌표
+          defaultZoom={15}
+        >
+          <Marker
+            defaultPosition={new navermaps.LatLng(35.2333798, 129.0798453)}
+          />
+        </NaverMap>
+      </MapDiv>
+    </div>
+  );
 }
+
 export default Map;
