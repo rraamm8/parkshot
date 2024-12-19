@@ -1,0 +1,12 @@
+package com.parkshot.persistence;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.parkshot.domain.Golfcourse;
+
+public interface GolfcourseRepository extends JpaRepository<Golfcourse, Integer> {
+	// 여러개의 결과를 반환하려면 List, 하나의 결과만 반환은 Optional
+	List<Golfcourse> findByRegion(String region);
+}

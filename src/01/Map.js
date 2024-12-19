@@ -92,6 +92,7 @@ function Map() {
         </NaverMap>
       </MapDiv>
     </div>
+
   );
 }
 
