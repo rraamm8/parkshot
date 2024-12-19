@@ -1,23 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './Home.css'; // CSS 파일 불러오기
+import React from "react";
+import { Link } from "react-router-dom";
+import "./Home.css"; // CSS 파일 불러오기
 
 function Home() {
   return (
     <div>
-
-
       {/* 홈화면 컨텐츠 */}
       <main className="main-content">
         {/* Left Content */}
         <section className="left-content">
           <h1 className="main-title">
-            파크샷에서 쉽게<br />
-            코스 예약과<br />
+            파크샷에서 쉽게
+            <br />
+            코스 예약과
+            <br />
             스코어 관리하세요.
           </h1>
           <p className="subtitle">
-            전국 파크골프장 검색, 예약, 코스별 스코어 관리,<br />
+            전국 파크골프장 검색, 예약, 코스별 스코어 관리,
+            <br />
             커뮤니티 기능까지 한 번에
           </p>
           <form className="search-form">
@@ -41,6 +42,7 @@ function Home() {
             />
           </div>
         </section>
+
       </main>
     </div>
   );

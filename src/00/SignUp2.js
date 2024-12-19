@@ -27,7 +27,7 @@ function SignUp2() {
 
         {/* 닉네임 입력 */}
         <div className="input-group">
-          <input type="text" placeholder="닉네임을 입력하세요.." className="signup-input" />
+          <input type="text" placeholder="닉네임을 입력하세요" className="signup-input" />
           <button type="button" className="confirm-btn">중복확인</button>
         </div>
 
