@@ -10,12 +10,18 @@ function Login() {
 
       {/* 회원가입 버튼 */}
       <div className="signup-buttons">
-        <Link to="/signup2">
+        <Link to="/login-input">
           <button className="signup-btn email">이메일로 로그인 →</button>
         </Link>
+        <Link to="http://10.125.121.226:8080/login/oauth2/code/naver">
         <button className="signup-btn naver">네이버로 로그인 →</button>
+        </Link>
+        <Link to="http://10.125.121.226:8080/login/oauth2/code/kakao">
         <button className="signup-btn kakao">카카오로 로그인 →</button>
+        </Link>
+        <Link to="http://10.125.121.226:8080/login/oauth2/code/google">
         <button className="signup-btn google">구글로 로그인 →</button>
+        </Link>
       </div>
     </div>
   );

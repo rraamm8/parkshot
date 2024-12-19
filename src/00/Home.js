@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css"; // CSS 파일 불러오기
+import phoneImage from "./phone.png";
+import browserImage from "./browser.png";
 
 function Home() {
   return (
@@ -31,12 +33,12 @@ function Home() {
         <section className="right-content">
           <div className="mockup">
             <img
-              src="https://via.placeholder.com/400x600"
+              src={phoneImage}
               alt="폰 목업"
               className="phone-image"
             />
             <img
-              src="https://via.placeholder.com/800x500"
+              src={browserImage}
               alt="브라우저 목업"
               className="browser-image"
             />

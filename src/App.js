@@ -7,6 +7,8 @@ import "./App.css";
 import Home from "./00/Home";
 import SignUp1 from "./00/SignUp1";
 import SignUp2 from "./00/SignUp2";
+import SignUpSuccess from './00/SignUpSuccess';
+import LoginInput from './00/LoginInput';
 import Login from "./00/Login";
 import Map from "./01/Map";
 import Reserve from "./02/Reserve";
@@ -57,14 +59,15 @@ function App() {
 
         <main
           className="w-full flex-grow  
-                       flex flex-col items-center
-                       overflow-y-auto"
+                     flex flex-col items-center"
         >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup1" element={<SignUp1 />} />
             <Route path="/signup2" element={<SignUp2 />} />
+            <Route path="/signup-success" element={<SignUpSuccess />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/login-input" element={<LoginInput />} />
             <Route path="/map" element={<Map />} />
             <Route path="/reserve" element={<Reserve />} />
             <Route path="/favorite" element={<Favorite />} />

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // React Router의 useNavigate
 import './SignUp.css';
 
 function SignUp2() {
-  // 상태 관리
-  const [email, setEmail] = useState('');
+  const [member_id, setMemberId] = useState(''); // 이메일 입력
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [nickname, setNickname] = useState('');
+  const navigate = useNavigate(); // 회원가입 성공 시 리다이렉트
 
-  // 회원가입 처리 함수
   const handleSignUp = async (e) => {
     e.preventDefault();
 
@@ -20,13 +20,13 @@ function SignUp2() {
 
     // 회원가입 데이터 전송
     const requestData = {
-      email,
+      member_id, // 필드명을 그대로 유지
       password,
       nickname,
     };
 
     try {
-      const response = await fetch('/signup', {
+      const response = await fetch('http://10.125.121.226:8080/member/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,8 @@ function SignUp2() {
       });
 
       if (response.ok) {
-        alert('회원가입 성공!');
+        // 회원가입 성공 시 랜딩 페이지로 이동
+        navigate('/signup-success');
       } else {
         const errorData = await response.json();
         alert(`회원가입 실패: ${errorData.message}`);
@@ -59,8 +60,8 @@ function SignUp2() {
             type="email"
             placeholder="이메일 입력"
             className="signup-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={member_id}
+            onChange={(e) => setMemberId(e.target.value)}
           />
           <button type="button" className="confirm-btn">
             중복확인

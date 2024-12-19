@@ -9,9 +9,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.parkshot.domain.Member;
+import com.parkshot.service.MemberService;
+
+import lombok.RequiredArgsConstructor;
+
+@RestController
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
+	
+	 private final MemberService memberService; // MemberService 주입
+	 
 	@GetMapping("/login")
 	public void login() {
 		System.out.println("login 요청");
@@ -44,9 +55,10 @@ public class MemberController {
 		return "OAuth2 : " + user;
 	}
 	
-//	@PostMapping("/register")
-//	public String Register(@RequestBody UserRequest request) {
-//		
-//	}
+	@PostMapping("/register")
+    public ResponseEntity<String> registerMember(@RequestBody Member member) {
+		memberService.registerMember(member);
+        return ResponseEntity.ok("회원가입 성공");
+    }
 	
 }

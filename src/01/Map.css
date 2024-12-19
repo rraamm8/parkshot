@@ -4,7 +4,6 @@
     display: flex;
     justify-content: center;
     align-items: flex-start; /* 상단 정렬 */
-    margin-top: 80px; /* NavBar 높이만큼 여백 추가 */
   }
   
   /* 네이버 지도 감싸는 Wrapper */
