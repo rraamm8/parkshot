@@ -1,9 +1,11 @@
+import React from 'react'
+
 function Reserve() {
 
-  return(
+  return (
     <div>
-        운영 중
-        </div>
+      운영 중
+    </div>
   );
 }
 

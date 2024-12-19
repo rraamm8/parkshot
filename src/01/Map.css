@@ -1,0 +1,19 @@
+/* 전체 Map 컨테이너 스타일 */
+.map-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* 상단 정렬 */
+    margin-top: 80px; /* NavBar 높이만큼 여백 추가 */
+  }
+  
+  /* 네이버 지도 감싸는 Wrapper */
+  .map-wrapper {
+    width: 100%;
+    max-width: 1200px; /* 최대 너비 설정 */
+    height: 500px; /* 지도 높이 설정 */
+    border: 1px solid #ddd; /* 테두리 추가 (선택사항) */
+    border-radius: 8px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 (선택사항) */
+  }
+  
