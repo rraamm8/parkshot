@@ -14,17 +14,17 @@ function SignUp1() {
           <button className="signup-btn email">이메일로 회원가입 →</button>
         </Link>
         {/* 네이버 회원가입 */}
-        <a href="http://10.125.121.226:8080/login/oauth2/authorization/naver">
+        <a href="http://10.125.121.226:8080/oauth2/authorization/naver">
           <button className="signup-btn naver">네이버로 회원가입 →</button>
         </a>
 
         {/* 카카오 회원가입 */}
-        <a href="http://10.125.121.226:8080/login/oauth2/authorization/kakao">
+        <a href="http://10.125.121.226:8080/oauth2/authorization/kakao">
           <button className="signup-btn kakao">카카오로 회원가입 →</button>
         </a>
 
         {/* 구글 회원가입 */}
-        <a href="http://10.125.121.226:8080/login/oauth2/authorization/google">
+        <a href="http://10.125.121.226:8080/oauth2/authorization/google">
           <button className="signup-btn google">구글로 회원가입 →</button>
         </a>
       </div>

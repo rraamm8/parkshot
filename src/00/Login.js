@@ -13,13 +13,13 @@ function Login() {
         <Link to="/login-input">
           <button className="signup-btn email">이메일로 로그인 →</button>
         </Link>
-        <Link to="http://10.125.121.226:8080/login/oauth2/code/naver">
+        <Link to="http://10.125.121.226:8080/oauth2/authorization/naver">
         <button className="signup-btn naver">네이버로 로그인 →</button>
         </Link>
-        <Link to="http://10.125.121.226:8080/login/oauth2/code/kakao">
+        <Link to="http://10.125.121.226:8080/oauth2/authorization/kakao">
         <button className="signup-btn kakao">카카오로 로그인 →</button>
         </Link>
-        <Link to="http://10.125.121.226:8080/login/oauth2/code/google">
+        <Link to="http://10.125.121.226:8080/oauth2/authorization/google">
         <button className="signup-btn google">구글로 로그인 →</button>
         </Link>
       </div>
