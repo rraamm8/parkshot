@@ -17,6 +17,15 @@ function Map() {
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
   const mapRef = useRef(null);
 
+  // 네이버 지도 API가 제대로 로드되었는지 확인
+  useEffect(() => {
+    if (!window.naver?.maps) {
+      console.error("Naver maps script not loaded.");
+    } else {
+      console.log("Naver maps script loaded:", window.naver.maps);
+    }
+  }, []);
+  
   useEffect(() => {
     if (!navermaps?.Service) {
       console.error("Naver maps Service is not available.");
@@ -35,7 +44,7 @@ function Map() {
         const locations = await Promise.all(
           data.map(async (item) => {
             const geo = await fetchGeocode(item.location);
-            return geo;
+            return geo ? { ...geo, name: item.name } : null;
           })
         );
 
@@ -53,13 +62,9 @@ function Map() {
       console.error("Geocoding service is not available.");
       return null;
     }
-  
+
     return new Promise((resolve) => {
       navermaps.Service.geocode({ query: address }, (status, response) => {
-        console.log(`Geocoding request for: ${address}`);
-        console.log("Geocoding status:", status);
-        console.log("Geocoding response:", response);
-  
         if (
           status === navermaps.Service.Status.OK &&
           response.v2.addresses.length > 0
@@ -73,43 +78,39 @@ function Map() {
       });
     });
   };
-  
 
   const handleSearch = async () => {
     if (!searchInput.trim()) {
       alert("검색어를 입력해주세요.");
       return;
     }
-  
+
     // 검색어 정규화
     const normalizedSearchInput = searchInput.trim().toLowerCase();
-  
+
     // 검색 결과 필터링
     const filteredCourses = golfCourses.filter((course) => {
       const normalizedName = course.name.toLowerCase();
       const normalizedLocation = course.location.toLowerCase();
-  
+
       return (
         normalizedName.includes(normalizedSearchInput) ||
         normalizedLocation.includes(normalizedSearchInput)
       );
     });
-  
-    // 디버깅: 검색 결과 확인
-    console.log("Filtered courses:", filteredCourses);
-  
+
     // 검색 결과 업데이트
     setSearchResults(filteredCourses);
-  
+
     if (filteredCourses.length === 0) {
       alert("검색된 결과가 없습니다.");
       return;
     }
-  
+
     // 첫 번째 검색 결과를 기준으로 지도 이동
     const firstResult = filteredCourses[0];
     const geoResult = await fetchGeocode(firstResult.location);
-  
+
     if (geoResult) {
       mapRef.current.setCenter(
         new navermaps.LatLng(geoResult.lat, geoResult.lng)
@@ -117,7 +118,6 @@ function Map() {
       mapRef.current.setZoom(14);
     }
   };
-  
 
   return (
     <div className="map-container">
@@ -151,6 +151,13 @@ function Map() {
                 }
               />
             )}
+          {markers.map((marker, index) => (
+            <Marker
+              key={index}
+              position={new navermaps.LatLng(marker.lat, marker.lng)}
+              title={marker.name}
+            />
+          ))}
         </NaverMap>
       </MapDiv>
 

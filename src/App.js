@@ -18,6 +18,16 @@ import Score from "./05/Score";
 import Contact from "./06/Contact";
 
 function App() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_CLIENT_ID}`;
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_CLIENT_ID}>
