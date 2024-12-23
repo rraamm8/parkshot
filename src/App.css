@@ -16,7 +16,7 @@
 
 /* 콘텐츠 영역 보상 */
 main {
-  padding-top: 100px; /* NavBar 높이만큼 패딩 추가 */
+  padding-top: 100px !important; /* NavBar 높이만큼 패딩 추가 */
   width: 100%;
   box-sizing: border-box; /* 패딩 포함 크기 계산 */
 }
