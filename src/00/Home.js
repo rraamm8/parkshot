@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css"; // CSS 파일 불러오기
-import phoneImage from "./phone.png";
-import browserImage from "./browser.png";
+import phoneImage from "../assets/images/phone.png";
+import browserImage from "../assets/images/browser.png";
 
 function Home() {
   return (

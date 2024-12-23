@@ -2,60 +2,47 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignUp.css"; // SignUp.css 파일 재사용
 
-function LoginInput() {
+function LoginInput({ setLoggedIn }) {
   const [member_id, setMemberId] = useState(""); // 이메일 입력
   const [password, setPassword] = useState(""); // 비밀번호 입력
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
-    const requestData = { member_id, password };
-  
+
+    const requestData = { member_id, password }; // 로그인 데이터
+
     try {
-      console.log("Request Data:", requestData);
-  
       const response = await fetch("http://10.125.121.226:8080/login", {
-        method: "POST",
+        method: "POST", // POST 메서드 사용
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", // JSON 데이터 전송
         },
-        body: JSON.stringify(requestData),
+        body: JSON.stringify(requestData), // 요청 본문
       });
-  
-      console.log("Response Status:", response.status);
-      console.log("Response Content-Type:", response.headers.get("Content-Type"));
-  
+
       if (response.ok) {
-        // 응답 본문이 JSON인지 확인
-        const contentType = response.headers.get("Content-Type");
-        if (contentType && contentType.includes("application/json")) {
-          const responseData = await response.json();
-          console.log("Response Data:", responseData);
-  
-          alert("로그인 성공!");
-          navigate("/member");
-        } else {
-          console.warn("Response is not JSON");
-          alert("로그인 성공했지만 응답 데이터가 올바르지 않습니다.");
-        }
+        const responseData = await response.json();
+        const nickname = responseData.member.nickname; // 닉네임 추출
+        localStorage.setItem("nickname", nickname); // 로컬 스토리지에 닉네임 저장
+        alert("로그인 성공!");
+        setLoggedIn(true); // 로그인 상태 변경
+        navigate("/member"); // 홈화면으로 이동
       } else {
-        const errorText = await response.text();
-        console.error("Error Response Text:", errorText);
-        alert(`로그인 실패: ${errorText}`);
+        const errorData = await response.json();
+        alert(`로그인 실패: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("로그인 요청 중 오류가 발생했습니다.");
+      alert("이메일과 비밀번호가 일치하지 않습니다.");
     }
   };
-  
-  
 
   return (
     <div className="signup-container">
       <h1 className="signup-title">로그인</h1>
       <form className="signup-form" onSubmit={handleLogin}>
+        {/* 이메일 입력 */}
         <div className="input-group">
           <input
             type="email"
@@ -65,6 +52,8 @@ function LoginInput() {
             onChange={(e) => setMemberId(e.target.value)}
           />
         </div>
+
+        {/* 비밀번호 입력 */}
         <div className="input-group">
           <input
             type="password"
@@ -74,6 +63,8 @@ function LoginInput() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
+        {/* 로그인 버튼 */}
         <button type="submit" className="submit-btn">
           로그인
         </button>
