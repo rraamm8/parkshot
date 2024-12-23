@@ -4,10 +4,14 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { NavermapsProvider } from 'react-naver-maps';
 
 import "./App.css";
+
 import Home from "./00/Home";
 import SignUp1 from "./00/SignUp1";
 import SignUp2 from "./00/SignUp2";
+import SignUpSuccess from './00/SignUpSuccess';
+import LoginInput from './00/LoginInput';
 import Login from "./00/Login";
+import MyPage from "./00/MyPage";
 import Map from "./01/Map";
 import Reserve from "./02/Reserve";
 import Favorite from "./03/Favorite";
@@ -16,6 +20,18 @@ import Score from "./05/Score";
 import Contact from "./06/Contact";
 
 function App() {
+
+  
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_CLIENT_ID}`;
+    script.async = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_CLIENT_ID}>
@@ -57,19 +73,24 @@ function App() {
 
         <main
           className="w-full flex-grow  
-                       flex flex-col items-center
-                       overflow-y-auto"
+                     flex flex-col items-center"
         >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup1" element={<SignUp1 />} />
             <Route path="/signup2" element={<SignUp2 />} />
+            <Route path="/loginSuccess" element={<SignUpSuccess />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/login-input" element={<LoginInput />} />
             <Route path="/map" element={<Map />} />
+            <Route path="/map/member" element={<Map />} />
             <Route path="/reserve" element={<Reserve />} />
+            <Route path="/reserve/member" element={<Reserve />} />
             <Route path="/favorite" element={<Favorite />} />
             <Route path="/community" element={<Community />} />
+            <Route path="/community/member" element={<Community />} />
             <Route path="/score" element={<Score />} />
+            <Route path="/score/member" element={<Score />} />
             <Route path="/contact" element={<Contact />} />
             
           </Routes>

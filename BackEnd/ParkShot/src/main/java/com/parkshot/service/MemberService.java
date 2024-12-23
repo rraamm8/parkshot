@@ -45,18 +45,18 @@ public class MemberService {
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
     
-//    public boolean validateLogin(String member_id, String password) {
-//        // 이메일로 멤버 조회
-//        // Optional<Member> optionalMember = memberRepo.findByMember_id(member_id);
-//    	
-//    	
-//        // 멤버가 존재하고 비밀번호가 일치하면 true 반환
-//        if (optionalMember.isPresent()) {
-//            Member member = optionalMember.get();
-//            return member.getPassword().equals(password);
-//        }
-//
-//        // 멤버가 존재하지 않거나 비밀번호가 틀리면 false 반환
-//        return false;
-//    }
+    public boolean validateLogin(String member_id, String password) {
+        // 이메일로 멤버 조회
+        Optional<Member> optionalMember = memberRepo.findById(member_id);
+    	
+    	
+        // 멤버가 존재하고 비밀번호가 일치하면 true 반환
+        if (optionalMember.isPresent()) {
+            Member member = optionalMember.get();
+            return member.getPassword().equals(password);
+        }
+
+        // 멤버가 존재하지 않거나 비밀번호가 틀리면 false 반환
+        return false;
+    }
 }
