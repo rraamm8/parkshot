@@ -27,9 +27,9 @@ function LoginInput({ setLoggedIn }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     const requestData = { member_id, password }; // 로그인 데이터
-  
+
     try {
       const response = await fetch("http://10.125.121.226:8080/login", {
         method: "POST",
@@ -38,25 +38,25 @@ function LoginInput({ setLoggedIn }) {
         },
         body: JSON.stringify(requestData),
       });
-  
+
       console.log("Response status:", response.status);
-  
+
       // 토큰 추출
       const authHeader = response.headers.get("Authorization");
       console.log("Authorization header:", authHeader);
-  
+
       if (authHeader) {
         const token = authHeader.replace("Bearer ", "").trim(); // 'Bearer ' 제거
         console.log("Extracted token:", token);
-  
+
         if (token) {
           localStorage.setItem("authToken", token); // 로컬 스토리지에 저장
-  
+
           // 파싱 전에 토큰 유효성 확인
           if (token.split(".").length === 3) {
             const decodedToken = parseJwt(token);
             console.log("Decoded token payload:", decodedToken);
-  
+
             const memberIdFromToken = decodedToken?.memberId;
             if (memberIdFromToken) {
               localStorage.setItem("member_id", memberIdFromToken);
@@ -75,9 +75,10 @@ function LoginInput({ setLoggedIn }) {
         alert("로그인 실패: 서버에서 토큰을 전달하지 않았습니다.");
         return;
       }
-  
+
       if (response.ok) {
         alert("로그인 성공!");
+        localStorage.setItem("loggedIn", "true"); // 로그인 상태 저장
         setLoggedIn(true);
         navigate("/member");
       } else {
@@ -89,7 +90,6 @@ function LoginInput({ setLoggedIn }) {
       alert("로그인 중 오류가 발생했습니다.");
     }
   };
-  
 
   return (
     <div className="signup-container">

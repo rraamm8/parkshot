@@ -1,0 +1,55 @@
+/* BoardWrite 전용 스타일 */
+
+/* 컨테이너 */
+.board-write-container {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* 제목 */
+  .board-write-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* 작성 폼 */
+  .board-write-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 필드 간 간격 */
+    width: 100%; /* 전체 넓이 사용 */
+    max-width: 600px; /* 최대 넓이 제한 */
+    margin: 0 auto; /* 중앙 정렬 */
+  }
+  
+  .board-write-input,
+  .board-write-textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px; /* 글씨 크기 조정 */
+  }
+  
+  .board-write-textarea {
+    height: 200px; /* 적절한 높이 설정 */
+    resize: none; /* 크기 조정 비활성화 */
+  }
+  
+  /* 버튼 */
+  .board-write-submit-button {
+    padding: 12px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .board-write-submit-button:hover {
+    background-color: #2263ca;
+  }
+  

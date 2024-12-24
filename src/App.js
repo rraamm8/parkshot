@@ -24,6 +24,8 @@ import Contact from "./06/Contact";
 function NavBar({ loggedIn, setLoggedIn }) {
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // localStorage에서 토큰 제거
+    localStorage.removeItem("member_id"); // member_id 제거
+    localStorage.removeItem("loggedIn"); // 로그인 상태 제거
     setLoggedIn(false); // 로그인 상태 초기화
     alert("로그아웃 되었습니다!");
   };
@@ -66,6 +68,9 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false); // 로그인 상태 관리
 
   useEffect(() => {
+    const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+    setLoggedIn(isLoggedIn);
+
     const script = document.createElement("script");
     script.src = `https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.REACT_APP_NAVER_CLIENT_ID}`;
     script.async = true;
