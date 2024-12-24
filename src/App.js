@@ -16,6 +16,7 @@ import Reserve from "./02/Reserve";
 import Favorite from "./03/Favorite";
 import Board from "./04/Board";
 import BoardWrite from "./04/BoardWrite";
+import BoardView from "./04/BoardView";
 import Score from "./05/Score";
 import Contact from "./06/Contact";
 
@@ -108,6 +109,7 @@ function App() {
               <Route path="/reserve" element={<Reserve />} />
               <Route path="/board" element={<Board />} />
               <Route path="/board/write" element={<BoardWrite />} />
+              <Route path="/board/:id" element={<BoardView />} />
               <Route path="/score" element={<Score />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
