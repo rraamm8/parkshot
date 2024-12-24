@@ -23,8 +23,13 @@ public class GolfcourseController {
         return golfcourseService.getGolfcourses();
     }
     
-    @GetMapping("/golfcourse/by-region")
-    public List<Golfcourse> getGolfCourseByRegion(@RequestParam String region) {
-        return golfcourseService.getGolfCoursesByRegion(region);
+    @GetMapping("/golfcourse/location")
+    public List<Golfcourse> findByLocationContainingOrRegionContaining(@RequestParam(defaultValue = "부산") String location, String region){
+    	return golfcourseService.findByLocationContainingOrRegionContaining(location, region);
+    }
+    
+    @GetMapping("/golfcourse/name")
+    public List<Golfcourse> findByNameContaining(@RequestParam(defaultValue = "사암") String name){
+    	return golfcourseService.findByNameContaining(name);
     }
 }

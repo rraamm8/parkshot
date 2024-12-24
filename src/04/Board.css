@@ -1,0 +1,129 @@
+/* 공통 스타일 */
+.board-container {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .board-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* 검색창 스타일 */
+  .board-search {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .board-search-input {
+    width: 300px;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .board-search-button {
+    padding: 8px 16px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* 게시판 테이블 스타일 */
+  .board-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .board-table th,
+  .board-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .board-table th {
+    background-color: #f8f9fa;
+  }
+  
+  .board-link {
+    color: #3b82f6;
+    text-decoration: none;
+  }
+  
+  .board-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* 페이지네이션 */
+  .board-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .board-pagination-button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* 게시글 작성 폼 스타일 */
+  .board-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .board-input,
+  .board-textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+  
+  .board-textarea {
+    height: 150px;
+    resize: none;
+  }
+  
+  .board-submit-button {
+    padding: 10px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .board-submit-button:hover {
+    background-color: #2263ca;
+  }
+  
+  .board-write-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 12px;
+    margin-left: 10px; /* 검색 버튼과 간격 추가 */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .board-write-button:hover {
+    background-color: #45a049;
+  }
+  

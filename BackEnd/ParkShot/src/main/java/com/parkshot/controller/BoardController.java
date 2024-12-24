@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.parkshot.domain.Board;
 import com.parkshot.domain.Member;
 import com.parkshot.service.BoardService;
+import com.parkshot.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +27,9 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private MemberService memberService;
 
 	// 1. 모든 게시글 조회
 	@GetMapping
@@ -50,7 +54,7 @@ public class BoardController {
 	public Board createBoard(@RequestBody Board board, @RequestParam String memberId) {
 		// Member 객체는 MemberService에서 가져온다고 가정
 		Member member = new Member();
-		member.setMember_id(memberId); // 간단한 예시, 실제 구현에서는 MemberService로 조회
+		memberService.findByUsername(memberId);
 
 		return boardService.createBoard(board, member);
 	}

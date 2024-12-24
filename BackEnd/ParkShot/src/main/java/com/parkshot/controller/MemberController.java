@@ -2,10 +2,13 @@ package com.parkshot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.parkshot.domain.Member;
@@ -60,13 +63,13 @@ public class MemberController {
 //		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 //	}
 
-//	@PostMapping("/auth")
-//	public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal User user) {
-//		if (user == null) {
-//			return ResponseEntity.ok("로그인 상태가 아닙니다.");
-//		}
-//		return ResponseEntity.ok(user);
-//	}
+	@PostMapping("/auth")
+	public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal User user) {
+		if (user == null) {
+			return ResponseEntity.ok("로그인 상태가 아닙니다.");
+		}
+		return ResponseEntity.ok(user);
+	}
 //
 //	@GetMapping("/oauth")
 //	public @ResponseBody String auth(@AuthenticationPrincipal OAuth2User user) {

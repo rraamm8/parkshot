@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // React Router의 useNavigate
-import "./SignUp.css";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // React Router의 useNavigate
+import './SignUp.css';
 
 function SignUp2() {
-  const [member_id, setMemberId] = useState(""); // 이메일 입력
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [nickname, setNickname] = useState("");
+  const [member_id, setMemberId] = useState(''); // 이메일 입력
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [nickname, setNickname] = useState('');
   const navigate = useNavigate(); // 회원가입 성공 시 리다이렉트
 
   const handleSignUp = async (e) => {
@@ -14,7 +14,7 @@ function SignUp2() {
 
     // 비밀번호 확인 검증
     if (password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다.");
+      alert('비밀번호가 일치하지 않습니다.');
       return;
     }
 
@@ -26,27 +26,24 @@ function SignUp2() {
     };
 
     try {
-      const response = await fetch(
-        "http://10.125.121.226:8080/member/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const response = await fetch('http://10.125.121.226:8080/member/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
 
       if (response.ok) {
         // 회원가입 성공 시 랜딩 페이지로 이동
-        navigate("/loginSuccess"); // 12/23 수정
+        navigate('/signup-success');
       } else {
         const errorData = await response.json();
         alert(`회원가입 실패: ${errorData.message}`);
       }
     } catch (error) {
-      console.error("Error during signup:", error);
-      alert("회원가입 중 오류가 발생했습니다.");
+      console.error('Error during signup:', error);
+      alert('회원가입 중 오류가 발생했습니다.');
     }
   };
 

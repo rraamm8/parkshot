@@ -18,7 +18,13 @@ public class GolfcourseService {
 		return golfcourseRepo.findAll();
 	}
 	
-	public List<Golfcourse> getGolfCoursesByRegion(String region) {
-        return golfcourseRepo.findByRegion(region);
-    }
+	public List<Golfcourse> findByNameContaining(String name){
+		return golfcourseRepo.findByNameContaining(name);
+	}
+	
+	public List<Golfcourse> findByLocationContainingOrRegionContaining(String location, String region){
+		return golfcourseRepo.findByLocationContainingOrRegionContaining(location, region);
+	}
+	
+	
 }
