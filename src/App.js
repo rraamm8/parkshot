@@ -17,6 +17,7 @@ import Favorite from "./03/Favorite";
 import Board from "./04/Board";
 import BoardWrite from "./04/BoardWrite";
 import BoardView from "./04/BoardView";
+import BoardEdit from "./04/BoardEdit";
 import Score from "./05/Score";
 import Contact from "./06/Contact";
 
@@ -115,6 +116,7 @@ function App() {
               <Route path="/board" element={<Board />} />
               <Route path="/board/write" element={<BoardWrite />} />
               <Route path="/board/:id" element={<BoardView />} />
+              <Route path="/board/edit/:id" element={<BoardEdit />} />
               <Route path="/score" element={<Score />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
