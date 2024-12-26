@@ -1,0 +1,160 @@
+/* 공통 스타일 */
+.board-container {
+  width: 80%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.board-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* 검색창 스타일 */
+.board-search {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.board-search-input {
+  width: 300px;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.board-search-button {
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.board-write-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.board-write-button:hover {
+  background-color: #45a049;
+}
+
+/* 게시판 테이블 스타일 */
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.board-table th,
+.board-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.board-table th {
+  background-color: #f8f9fa;
+}
+
+.board-link {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.board-link:hover {
+  text-decoration: underline;
+}
+
+/* 페이지네이션 */
+.board-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.board-pagination-button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* 게시글 보기 스타일 */
+.board-view-content {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.board-view-info {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.board-view-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-top: 20px;
+}
+
+/* 버튼 그룹 */
+.board-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* 버튼 스타일 재활용 */
+.board-correct-button,
+.board-delete-button,
+.board-list-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.board-correct-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.board-delete-button {
+  background-color: #db2929;
+  color: white;
+}
+
+.board-list-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.board-correct-button:hover {
+  background-color: #2263ca;
+}
+
+.board-delete-button:hover {
+  background-color: #b71c1c;
+}
+
+.board-list-button:hover {
+  background-color: #2263ca;
+}

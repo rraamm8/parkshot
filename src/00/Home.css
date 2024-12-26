@@ -1,9 +1,9 @@
 /* Reset 스타일 */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 html,
 body {
@@ -67,7 +67,7 @@ body {
 /* 오른쪽 이미지 목업 */
 .right-content {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -77,17 +77,20 @@ body {
 
 .phone-image {
   position: absolute;
-  top: 50px;
-  left: 100px;
-  width: 250px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  top: 80px;
+  left: 80px;
+  width: 450px;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
 }
 
 .browser-image {
-  width: 500px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 600px;
+  margin-right: 0; /* 오른쪽 여백 제거 */
+  padding-right: 0; /* 내부 여백 제거 */
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
 }
 
 .nav-links li a {
   font-weight: bold; /* nav 글자 굵게 */
 }
+
