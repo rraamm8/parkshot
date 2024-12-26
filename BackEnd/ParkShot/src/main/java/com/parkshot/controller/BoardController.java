@@ -3,6 +3,7 @@ package com.parkshot.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +34,24 @@ public class BoardController {
 
 	// 1. 모든 게시글 조회
 	@GetMapping
-	public List<Board> getAllBoards() {
-		return boardService.getAllBoards();
-	}
+    public Page<Board> getBoards(
+            @RequestParam(defaultValue = "1") int page,          // 기본 페이지 번호: 1
+            @RequestParam(defaultValue = "10") int size,         // 기본 페이지 크기: 10
+            @RequestParam(defaultValue = "id") String sortBy,  // 기본 정렬 기준
+            @RequestParam(defaultValue = "asc") String sortDirection    // 기본 정렬 방향: 내림차순
+    ) {
+        return boardService.getBoards(page, size, sortBy, sortDirection);
+    }
 
 	// 2. 특정 게시글 조회
 	@GetMapping("/{id}")
 	public Board getBoardById(@PathVariable Long id) {
+		Board board = boardService.getBoardById(id);
+		if (board != null) {
+	        // 조회수 증가
+	        board.setCnt(board.getCnt() + 1);
+	        boardService.save(board); // 변경 사항 저장
+	    }
 		return boardService.getBoardById(id);
 	}
 
@@ -53,8 +65,12 @@ public class BoardController {
 	@PostMapping
 	public Board createBoard(@RequestBody Board board, @RequestParam String memberId) {
 		// Member 객체는 MemberService에서 가져온다고 가정
-		Member member = new Member();
-		memberService.findByUsername(memberId);
+		Member member = memberService.findByUsername(memberId);
+		if (member == null) {
+			throw new IllegalArgumentException("Invalid memberId : member not found");
+		}
+		
+		board.setMember(member);
 
 		return boardService.createBoard(board, member);
 	}

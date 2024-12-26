@@ -3,6 +3,10 @@ package com.parkshot.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.parkshot.domain.Board;
@@ -17,9 +21,17 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepo;
 	
-	// 1. 모든 게시글 조회
-    public List<Board> getAllBoards() {
-        return boardRepo.findAll();
+	public Page<Board> getBoards(int page, int size, String sortBy, String sortDirection) {
+        // 정렬 방향 설정 (ASC 또는 DESC)
+        Sort sort = sortDirection.equalsIgnoreCase("desc") 
+                    ? Sort.by(sortBy).descending() 
+                    : Sort.by(sortBy).ascending();
+
+        // Pageable 객체 생성
+        Pageable pageable = PageRequest.of(page - 1, size, sort);
+
+        // 페이징된 결과 반환
+        return boardRepo.findAll(pageable);
     }
 
     // 2. 특정 게시글 조회
@@ -37,6 +49,11 @@ public class BoardService {
     @Transactional
     public Board createBoard(Board board, Member member) {
         board.setMember(member); // Member 객체 설정
+        return boardRepo.save(board);
+    }
+    
+    @Transactional
+    public Board save(Board board) {
         return boardRepo.save(board);
     }
 
