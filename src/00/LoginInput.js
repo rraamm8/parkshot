@@ -7,36 +7,23 @@ function LoginInput({ setLoggedIn }) {
   const [password, setPassword] = useState(""); // 비밀번호 입력
   const navigate = useNavigate();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   const requestData = { member_id, password }; // 로그인 데이터
-
-  //   try {
-  //     const response = await fetch("http://localhost:8080/login", {
-  //       method: "POST", // POST 메서드 사용
-  //       headers: {
-  //         "Content-Type": "application/json", // JSON 데이터 전송
-  //       },
-  //       body: JSON.stringify(requestData), // 요청 본문
-  //     });
-
-  //     if (response.ok) {
-  //       const responseData = await response.json();
-  //       const nickname = responseData.member.nickname; // 닉네임 추출
-  //       localStorage.setItem("nickname", nickname); // 로컬 스토리지에 닉네임 저장
-  //       alert("로그인 성공!");
-  //       setLoggedIn(true); // 로그인 상태 변경
-  //       navigate("/member"); // 홈화면으로 이동
-  //     } else {
-  //       const errorData = await response.json();
-  //       alert(`로그인 실패: ${errorData.message}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during login:", error);
-  //     alert("이메일과 비밀번호가 일치하지 않습니다.");
-  //   }
-  // };
+  // JWT 토큰 디코딩 함수
+  const parseJwt = (token) => {
+    try {
+      const base64Url = token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.error("Failed to parse JWT:", error);
+      return null;
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -45,34 +32,56 @@ function LoginInput({ setLoggedIn }) {
 
     try {
       const response = await fetch("http://10.125.121.226:8080/login", {
-        method: "POST", // POST 메서드 사용
+        method: "POST",
         headers: {
-          "Content-Type": "application/json", // JSON 데이터 전송
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestData), // 요청 본문
+        body: JSON.stringify(requestData),
       });
 
-      console.log("Response status:", response.status); // 응답 상태 코드 확인
+      console.log("Response status:", response.status);
+
+      // 토큰 추출
+      const authHeader = response.headers.get("Authorization");
+      console.log("Authorization header:", authHeader);
+
+      if (authHeader) {
+        const token = authHeader.replace("Bearer ", "").trim(); // 'Bearer ' 제거
+        console.log("Extracted token:", token);
+
+        if (token) {
+          localStorage.setItem("authToken", token); // 로컬 스토리지에 저장
+
+          // 파싱 전에 토큰 유효성 확인
+          if (token.split(".").length === 3) {
+            const decodedToken = parseJwt(token);
+            console.log("Decoded token payload:", decodedToken);
+
+            const memberIdFromToken = decodedToken?.memberId;
+            if (memberIdFromToken) {
+              localStorage.setItem("member_id", memberIdFromToken);
+              console.log("Stored member_id in localStorage:", memberIdFromToken);
+            } else {
+              console.warn("member_id not found in token payload.");
+            }
+          } else {
+            console.error("Invalid JWT format.");
+          }
+        } else {
+          console.error("Token is empty or undefined.");
+        }
+      } else {
+        console.warn("Authorization header not found.");
+        alert("로그인 실패: 서버에서 토큰을 전달하지 않았습니다.");
+        return;
+      }
 
       if (response.ok) {
-        // JWT만 반환하는 경우
-        const authHeader = response.headers.get("Authorization");
-        if (authHeader) {
-          const token = authHeader.replace("Bearer ", ""); // 'Bearer '를 제거하고 토큰만 추출
-          console.log("token", token);
-        }
-        // 닉네임을 별도로 반환하는 경우 처리
-        if (response.headers.get("Content-Type") === "application/json") {
-          const responseData = await response.json();
-          const nickname = responseData.member.nickname; // 닉네임 추출
-          localStorage.setItem("nickname", nickname); // 로컬 스토리지에 닉네임 저장
-        }
-
         alert("로그인 성공!");
-        setLoggedIn(true); // 로그인 상태 변경
-        navigate("/member"); // 홈화면으로 이동
+        localStorage.setItem("loggedIn", "true"); // 로그인 상태 저장
+        setLoggedIn(true);
+        navigate("/member");
       } else {
-        // 실패 시 JSON 메시지 처리
         const errorData = await response.json();
         alert(`로그인 실패: ${errorData.message}`);
       }
