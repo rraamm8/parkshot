@@ -22,7 +22,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
 			throws UsernameNotFoundException {
 		Member member = memberRepo.findById(username)
 				.orElseThrow(() -> new UsernameNotFoundException("Not Found!"));
-		return new User(member.getMember_id(), member.getPassword(),
+		return new User(member.getUsername(), member.getPassword(),
 				AuthorityUtils.createAuthorityList(member.getRole().toString()));
 	}
 }

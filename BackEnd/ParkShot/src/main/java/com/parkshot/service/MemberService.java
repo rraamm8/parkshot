@@ -19,11 +19,25 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     public Member registerMember(Member member) {
+    	
+    	Member memberRegi = Member.builder()
+                .username(member.getUsername())
+                .password(passwordEncoder.encode(member.getPassword()))
+                .nickname(member.getNickname())
+                .role(Role.ROLE_MEMBER)
+                .enabled(true)
+                .build();
+
+            return memberRepo.save(memberRegi);
+
+    }
+
         // 비밀번호 암호화
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
-        member.setRole(Role.ROLE_MEMBER);
-        member.setEnabled(true);
-        
+//    	member.setUsername(member.getUsername());
+//        member.setPassword(passwordEncoder.encode(member.getPassword()));
+//        member.setRole(Role.ROLE_MEMBER);
+//        member.setEnabled(true);
+//        member.setNickname(member.getNickname());
 //        // Member 객체 생성 및 저장
 //        Member memberRegi = Member.builder()
 //            .member_id(member.getMember_id())
@@ -33,21 +47,20 @@ public class MemberService {
 //            .enabled(true)
 //            .build();
 //        
-        // 이메일(PK)이 중복되면 예외 처리
+         // 이메일(PK)이 중복되면 예외 처리
 //        if (memberRepo.existsById(member.getMember_id())) {
 //            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
 //        }
-        return memberRepo.save(member);
-    }
 
+    
     public Member findByUsername(String username) {
         return memberRepo.findById(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
-    
-    public boolean validateLogin(String member_id, String password) {
+
+    public boolean validateLogin(String username, String password) {
         // 이메일로 멤버 조회
-        Optional<Member> optionalMember = memberRepo.findById(member_id);
+        Optional<Member> optionalMember = memberRepo.findById(username);
     	
     	
         // 멤버가 존재하고 비밀번호가 일치하면 true 반환

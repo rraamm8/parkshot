@@ -32,7 +32,7 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain sequrityFilterChain(HttpSecurity http) throws Exception {
-
+		// CSRF 보호 비활성화
 		http.csrf(csrf -> csrf.disable());
 		http.cors().and();
 
@@ -40,17 +40,23 @@ public class SecurityConfig {
 //				.requestMatchers("/member/**").authenticated()
 //				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().permitAll());
-
+		
+		// 기본 로그인 페이지 설정
 		http.formLogin(form -> form.loginPage("/login")
 				.defaultSuccessUrl("/loginSuccess", true));
 		
+		// HTTP 기본 인증 비활성화
 		http.httpBasic(basic -> basic.disable());
-
+		
+		// JWT 인증 필터 추가
 		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
-		// http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+		
+		http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		
+		// JWT 권한 필터 추가		
 		http.addFilterBefore(new JWTAuthorizationFilter(memberRepo), AuthorizationFilter.class);
-
+		
+		// OAuth2 로그인 핸들러
 		http.oauth2Login(oauth2 -> oauth2.successHandler(successHandler));
 
 		return http.build();

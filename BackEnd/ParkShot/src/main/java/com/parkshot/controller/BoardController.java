@@ -63,9 +63,9 @@ public class BoardController {
 
 	// 4. 게시글 생성
 	@PostMapping
-	public Board createBoard(@RequestBody Board board, @RequestParam String memberId) {
+	public Board createBoard(@RequestBody Board board, @RequestParam String username) {
 		// Member 객체는 MemberService에서 가져온다고 가정
-		Member member = memberService.findByUsername(memberId);
+		Member member = memberService.findByUsername(username);
 		if (member == null) {
 			throw new IllegalArgumentException("Invalid memberId : member not found");
 		}

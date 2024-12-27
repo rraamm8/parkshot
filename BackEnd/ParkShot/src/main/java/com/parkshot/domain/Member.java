@@ -1,5 +1,6 @@
 package com.parkshot.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,7 +21,9 @@ import lombok.ToString;
 @Entity
 public class Member {
 	@Id
-	private String member_id;
+	@Column(name = "member_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String username;
 	
 	private String nickname;
 	private String password;

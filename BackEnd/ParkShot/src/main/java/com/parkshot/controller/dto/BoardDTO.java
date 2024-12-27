@@ -13,7 +13,7 @@ public class BoardDTO {
         this.id = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();
-        this.memberId = board.getMember().getMember_id();
+        this.memberId = board.getMember().getUsername();
         this.nickname = board.getMember().getNickname();
     }
 }
