@@ -1,0 +1,11 @@
+2024-12-19 09:35:27,922 [Worker-1: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2024-12-19 16:42:16,948 [Worker-7: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2024-12-19 16:42:34,071 [Worker-10: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.parkshot:ParkShot:0.0.1-SNAPSHOT @ C:\parkshot\BackEnd\ParkShot\pom.xml.
+2024-12-19 16:42:35,066 [Worker-9: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.parkshot:ParkShot:0.0.1-SNAPSHOT @ C:\parkshot\BackEnd\ParkShot\pom.xml.
+2024-12-19 16:42:36,330 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-12-19 16:42:36,349 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-12-19 16:42:36,358 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\parkshot\BackEnd\ParkShot\src\test\resources
+2024-12-19 16:42:37,958 [Worker-10: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: com.parkshot:ParkShot:0.0.1-SNAPSHOT @ C:\parkshot\BackEnd\ParkShot\pom.xml.
+2024-12-19 16:42:38,310 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-12-19 16:42:38,327 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-12-19 16:42:38,334 [Worker-1: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\parkshot\BackEnd\ParkShot\src\test\resources
