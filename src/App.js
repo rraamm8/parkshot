@@ -34,11 +34,26 @@ function NavBar({ loggedIn, setLoggedIn }) {
   return (
     <nav className="navbar">
       <ul className="nav-links">
-        <li> <Link to="/">Home</Link> </li>
-        <li> <Link to="/map">코스 찾기</Link> </li>
-        <li> <Link to="/reserve">예약하기</Link> </li>
-        <li> <Link to="/score">스코어보드</Link> </li>
-        <li> <Link to="/board">커뮤니티</Link> </li>
+        <li>
+          {" "}
+          <Link to="/">Home</Link>{" "}
+        </li>
+        <li>
+          {" "}
+          <Link to="/map">코스 찾기</Link>{" "}
+        </li>
+        <li>
+          {" "}
+          <Link to="/reserve">예약하기</Link>{" "}
+        </li>
+        <li>
+          {" "}
+          <Link to="/score">스코어보드</Link>{" "}
+        </li>
+        <li>
+          {" "}
+          <Link to="/board">커뮤니티</Link>{" "}
+        </li>
       </ul>
       <div className="auth-buttons">
         {!loggedIn ? (
@@ -83,55 +98,57 @@ function App() {
   }, []);
 
   return (
-    <NavermapsProvider ncpClientId={process.env.REACT_APP_NAVER_CLIENT_ID}>
-      <BrowserRouter>
-        {/* 전체 레이아웃 */}
-        <div
-          className="w-full xl:w-10/12 h-screen mx-auto
+    <BrowserRouter>
+      {/* 전체 레이아웃 */}
+      <div
+        className="w-full xl:w-10/12 h-screen mx-auto
                       flex flex-col justify-center items-center"
-        >
-          <header className="header">
-            {/* NavBar에 로그인 상태 전달 */}
-            <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          </header>
+      >
+        <header className="header">
+          {/* NavBar에 로그인 상태 전달 */}
+          <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+        </header>
 
-          <main
-            className="w-full flex-grow  
+        <main
+          className="w-full flex-grow  
                        flex flex-col items-center"
-          >
-            <Routes>
-              {/* 라우트 설정 */}
-              <Route path="/" element={<Home />} />
-              <Route path="/member" element={<Home />} />
-              <Route path="/signup1" element={<SignUp1 />} />
-              <Route path="/signup2" element={<SignUp2 />} />
-              <Route path="/loginSuccess" element={<SignUpSuccess />} />
-              <Route path="/login"
-                element={<Login setLoggedIn={setLoggedIn} />} />
-              <Route path="/login-input"
-                element={<LoginInput setLoggedIn={setLoggedIn} />} />
-              <Route path="/mypage" element={<MyPage />} />
-              <Route path="/map" element={<Map />} />
-              <Route path="/reserve" element={<Reserve />} />
-              <Route path="/board" element={<Board />} />
-              <Route path="/board/write" element={<BoardWrite />} />
-              <Route path="/board/:id" element={<BoardView />} />
-              <Route path="/board/edit/:id" element={<BoardEdit />} />
-              <Route path="/score" element={<Score />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
-          </main>
+        >
+          <Routes>
+            {/* 라우트 설정 */}
+            <Route path="/" element={<Home />} />
+            <Route path="/member" element={<Home />} />
+            <Route path="/signup1" element={<SignUp1 />} />
+            <Route path="/signup2" element={<SignUp2 />} />
+            <Route path="/loginSuccess" element={<SignUpSuccess />} />
+            <Route
+              path="/login"
+              element={<Login setLoggedIn={setLoggedIn} />}
+            />
+            <Route
+              path="/login-input"
+              element={<LoginInput setLoggedIn={setLoggedIn} />}
+            />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/map" element={<Map />} />
+            <Route path="/reserve" element={<Reserve />} />
+            <Route path="/board" element={<Board />} />
+            <Route path="/board/write" element={<BoardWrite />} />
+            <Route path="/board/:id" element={<BoardView />} />
+            <Route path="/board/edit/:id" element={<BoardEdit />} />
+            <Route path="/score" element={<Score />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
 
-          <footer
-            className="w-full h-20 flex-shrink-0
+        <footer
+          className="w-full h-20 flex-shrink-0
                            flex justify-center items-center
                            bg-black text-white"
-          >
-            <p>K-digital 8기 미니프로젝트</p>
-          </footer>
-        </div>
-      </BrowserRouter>
-    </NavermapsProvider>
+        >
+          <p>K-digital 8기 미니프로젝트</p>
+        </footer>
+      </div>
+    </BrowserRouter>
   );
 }
 

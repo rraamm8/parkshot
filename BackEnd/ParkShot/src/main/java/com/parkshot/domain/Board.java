@@ -2,6 +2,8 @@ package com.parkshot.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +34,8 @@ public class Board {
 
 	@ManyToOne
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Member member;
+	
 
 }
