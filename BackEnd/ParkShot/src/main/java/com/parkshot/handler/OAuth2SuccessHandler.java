@@ -47,7 +47,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		// name 만들어서 서버에 저장
 		String name = (String) user.getAttributes().get("name");
 	    if (name == null || name.isEmpty()) {
-	        log.warn("onAuthenticationSuccess: 'name' attribute is missing, defaulting to 'k_digital'.");
+	        log.warn("onAuthenticationSuccess: 'name' attribute is missing, defaulting to '아무개'.");
 	        name = "아무개"; // 기본값 설정
 	    }
 	    
@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 				.member_id(username)
 				.password(encoder.encode("1a2s3d4f"))
 				.role(Role.ROLE_MEMBER)
-				.name(name)
+				.nickname(name)
 				.enabled(true)
 				.build());
 		

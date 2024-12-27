@@ -20,7 +20,7 @@ import com.parkshot.persistence.MemberRepository;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
+
 	@Autowired
 	private OAuth2SuccessHandler successHandler;
 
@@ -34,23 +34,27 @@ public class SecurityConfig {
 	SecurityFilterChain sequrityFilterChain(HttpSecurity http) throws Exception {
 
 		http.csrf(csrf -> csrf.disable());
+		http.cors().and();
 
-		http.authorizeHttpRequests(auth->auth
-				.requestMatchers("/member/**").authenticated()
-				.requestMatchers("/admin/**").hasRole("ADMIN")
+		http.authorizeHttpRequests(auth -> auth
+//				.requestMatchers("/member/**").authenticated()
+//				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().permitAll());
 
-		http.formLogin(frmLogin -> frmLogin.disable());
+		http.formLogin(form -> form.loginPage("/login")
+				.defaultSuccessUrl("/loginSuccess", true));
+		
 		http.httpBasic(basic -> basic.disable());
 
 		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
-		http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		// http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		http.addFilterBefore(new JWTAuthorizationFilter(memberRepo), AuthorizationFilter.class);
-		
-		http.oauth2Login(oauth2->oauth2.successHandler(successHandler));
-		
+
+		http.oauth2Login(oauth2 -> oauth2.successHandler(successHandler));
+
 		return http.build();
 	}
+
 
 }

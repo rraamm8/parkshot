@@ -3,6 +3,8 @@ package com.parkshot.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +22,7 @@ public class Member {
 	@Id
 	private String member_id;
 	
-	private String name;
+	private String nickname;
 	private String password;
 	@Enumerated(EnumType.STRING)
 	private Role role;

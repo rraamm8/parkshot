@@ -1,12 +1,4 @@
-/* Reset 스타일 */
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
-
-html,
-body {
+html, body {
   height: 100%;
   font-family: "Arial", sans-serif;
   background-color: #ffffff;
@@ -17,8 +9,8 @@ body {
 .main-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: calc(100vh - 80px); /* 헤더 제외한 높이 */
-  align-items: center;
+  height: calc(100vh - 100px); /* 헤더 제외한 높이 */
+  align-items: start;
   padding: 50px;
 }
 
