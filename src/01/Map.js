@@ -127,7 +127,7 @@ function Map() {
   return (
     <NavermapsProvider>
       <MapDiv className="map-wrapper">
-        <MyMap area={area} /> {/* MyMap 컴포넌트 렌더링 */}
+        <MyMap area={area} markers={markers}/> {/* MyMap 컴포넌트 렌더링 */}
       </MapDiv>
       {/* 검색 필드와 버튼 */}
       <div className="search-container">

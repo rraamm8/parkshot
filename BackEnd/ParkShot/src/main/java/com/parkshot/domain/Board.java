@@ -36,5 +36,6 @@ public class Board {
 	@JoinColumn(name = "MEMBER_ID", nullable = false, updatable = false)
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Member member;
+	
 
 }

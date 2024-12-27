@@ -1,0 +1,86 @@
+/* /* .score {
+  margin: 20px;
+}
+
+.score-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.score-table th,
+.score-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.below-par {
+  background-color: red;
+  color: white;
+}
+
+.above-par {
+  background-color: blue;
+  color: white;
+}
+
+.distance-info {
+  font-size: 12px;
+  color: gray;
+  text-align: center;
+}
+
+.score {
+  margin: 20px;
+}
+
+.score-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.score-table th,
+.score-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.score-table th[colspan="4"] {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.hole-section {
+  margin-bottom: 30px;
+}
+
+.hole-section h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+ */
+
+.score {
+  margin: 20px;
+}
+
+.score-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.score-table th,
+.score-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.score-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}

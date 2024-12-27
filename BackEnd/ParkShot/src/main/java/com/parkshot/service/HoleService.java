@@ -21,4 +21,8 @@ public class HoleService {
 		Hole hole = holeRepo.findById(id).get();
 		return hole.toString();
 	}
+	
+	public List<Hole> findByCourseId(Integer courseId){
+		return holeRepo.findByCourseId(courseId);
+	}
 }
