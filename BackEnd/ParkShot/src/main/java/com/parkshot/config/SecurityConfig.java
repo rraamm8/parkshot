@@ -47,7 +47,7 @@ public class SecurityConfig {
 		http.httpBasic(basic -> basic.disable());
 
 		http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
-		// http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		http.addFilterBefore(new JWTAuthorizationFilter(memberRepo), AuthorizationFilter.class);
 

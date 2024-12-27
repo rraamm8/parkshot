@@ -18,7 +18,7 @@ import Board from "./04/Board";
 import BoardWrite from "./04/BoardWrite";
 import BoardView from "./04/BoardView";
 import BoardEdit from "./04/BoardEdit";
-import Score from "./05/Score";
+import Score from "./03/Score";
 import Contact from "./06/Contact";
 
 // NavBar 컴포넌트
