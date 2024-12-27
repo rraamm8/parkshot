@@ -6,6 +6,7 @@ function BoardView() {
   const { id } = useParams(); // URL에서 id 추출
   const navigate = useNavigate();
   const [post, setPost] = useState(null); // 게시글 데이터 초기값
+  const memberId = localStorage.getItem("member_id"); // 현재 로그인한 사용자 ID
 
   // 데이터 가져오기
   useEffect(() => {
@@ -17,8 +18,14 @@ function BoardView() {
 
   // 삭제 기능
   const handleDelete = () => {
+    console.log("Logged-in member_id:", memberId);
+    console.log("Post author ID:", post ? post.member.member_id : "Post data not loaded");
+    if (post.member.member_id !== memberId) {
+      alert("권한이 없습니다. 삭제할 수 없습니다.");
+      return;
+    }
     if (window.confirm("정말로 삭제하시겠습니까?")) {
-      fetch(`http://10.125.121.226:8080/boards/${id}`, {
+      fetch(`http://10.125.121.226:8080/boards/${id}?memberId=${memberId}`, {
         method: "DELETE",
       })
         .then((response) => {
@@ -35,10 +42,16 @@ function BoardView() {
 
   // 수정 버튼 클릭
   const handleEdit = () => {
+    console.log("Logged-in member_id:", memberId);
+    console.log("Post author ID:", post ? post.member.member_id : "Post data not loaded");
+    if (post.member.member_id !== memberId) {
+      alert("권한이 없습니다. 수정할 수 없습니다.");
+      return;
+    }
     navigate(`/board/edit/${id}`); // 수정 페이지로 이동
   };
 
-  // 게시글 데이터가 없을 때
+  // 게시글 데이터가 없을 때z
   if (!post) {
     return <p>로딩 중...</p>;
   }
@@ -64,7 +77,8 @@ function BoardView() {
         </button>
         <button
           onClick={() => navigate("/board")}
-          className="board-list-button">
+          className="board-list-button"
+        >
           목록
         </button>
       </div>

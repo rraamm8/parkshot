@@ -50,11 +50,7 @@ function Home() {
         <section className="right-content">
           <div className="mockup">
             <img src={phoneImage} alt="폰 목업" className="phone-image" />
-            <img
-              src={browserImage}
-              alt="브라우저 목업"
-              className="browser-image"
-            />
+            <img src={browserImage} alt="브라우저 목업" className="browser-image" />
           </div>
         </section>
       </main>

@@ -13,12 +13,11 @@ import Login from "./00/Login";
 import MyPage from "./00/MyPage";
 import Map from "./01/Map";
 import Reserve from "./02/Reserve";
-import Favorite from "./03/Favorite";
+import Score from "./03/Score";
 import Board from "./04/Board";
 import BoardWrite from "./04/BoardWrite";
 import BoardView from "./04/BoardView";
 import BoardEdit from "./04/BoardEdit";
-import Score from "./03/Score";
 import Contact from "./06/Contact";
 
 // NavBar 컴포넌트

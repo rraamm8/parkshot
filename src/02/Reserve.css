@@ -1,0 +1,209 @@
+/* Reserve 컨테이너 */
+.reserve-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가로 중앙 정렬 */
+    min-height: 100vh; /* 화면 전체 높이 사용 */
+}
+
+/* 제목 스타일 */
+.reserve-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* 섹션 제목 */
+.reserve-container h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0;
+    color: #555;
+}
+
+/* 검색창 스타일 */
+.search-courses {
+    margin-bottom: 15px;
+}
+
+.search-input-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-input-container input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-input-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-input-container button:hover {
+    background-color: #005bb5;
+}
+
+/* 골프장 그리드 스타일 */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px 0;
+}
+
+.course-grid.single {
+    grid-template-columns: 400px;
+    justify-content: center;
+    margin-top: 10px; /* 검색 결과 1개일 때 상단 여백 조정 */
+}
+
+/* 골프장 카드 */
+.course-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.course-card:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02);
+}
+
+.course-card.selected {
+    background-color: #0073e6;
+    color: white;
+    font-weight: 600;
+    border-color: #005bb5;
+}
+
+.course-card.selected h3,
+.course-card.selected p {
+    color: white; /* 모든 텍스트를 화이트로 설정 */
+}
+
+/* 골프장 카드 내부 텍스트 */
+.course-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.course-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* 구장 상세 정보 */
+.course-details {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* 날짜 선택 */
+.date-picker {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가로 중앙 정렬 */
+}
+
+.date-picker .react-calendar {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* 시간 선택 */
+.time-picker {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 가로 중앙 정렬 */
+}
+
+.time-slot-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid; /* 그리드 레이아웃 사용 */
+    grid-template-columns: repeat(4, 1fr); /* 4열 레이아웃 */
+    gap: 10px; /* 각 셀 간격 */
+    justify-content: center; /* 가로 중앙 정렬 */
+}
+
+.time-slot-list li {
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    color: #333;
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.time-slot-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.time-slot-list .selected {
+    background-color: #0073e6;
+    color: white;
+    border-color: #005bb5;
+}
+
+/* 예약 버튼 */
+.confirm-reservation {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.confirm-reservation button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #0073e6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 30px;
+    width: 300px;
+}
+
+.confirm-reservation button:hover {
+    background-color: #005bb5;
+}
