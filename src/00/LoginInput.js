@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./SignUp.css"; // SignUp.css 파일 재사용
+import "./SignUp.css";
 
 function LoginInput({ setLoggedIn }) {
-  const [member_id, setMemberId] = useState(""); // 이메일 입력
+  const [username, setUsername] = useState(""); // 이메일 입력
   const [password, setPassword] = useState(""); // 비밀번호 입력
   const navigate = useNavigate();
 
-  // JWT 토큰 디코딩 함수
   const parseJwt = (token) => {
     try {
       const base64Url = token.split(".")[1];
@@ -28,7 +27,7 @@ function LoginInput({ setLoggedIn }) {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const requestData = { member_id, password }; // 로그인 데이터
+    const requestData = { username, password };
 
     try {
       const response = await fetch("http://10.125.121.226:8080/login", {
@@ -41,50 +40,39 @@ function LoginInput({ setLoggedIn }) {
 
       console.log("Response status:", response.status);
 
-      // 토큰 추출
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(`로그인 실패: ${errorData.message || "알 수 없는 오류"}`);
+        return;
+      }
+
       const authHeader = response.headers.get("Authorization");
-      console.log("Authorization header:", authHeader);
-
-      if (authHeader) {
-        const token = authHeader.replace("Bearer ", "").trim(); // 'Bearer ' 제거
-        console.log("Extracted token:", token);
-
-        if (token) {
-          localStorage.setItem("authToken", token); // 로컬 스토리지에 저장
-
-          // 파싱 전에 토큰 유효성 확인
-          if (token.split(".").length === 3) {
-            const decodedToken = parseJwt(token);
-            console.log("Decoded token payload:", decodedToken);
-
-            const memberIdFromToken = decodedToken?.memberId;
-            if (memberIdFromToken) {
-              localStorage.setItem("member_id", memberIdFromToken);
-              console.log("Stored member_id in localStorage:", memberIdFromToken);
-            } else {
-              console.warn("member_id not found in token payload.");
-            }
-          } else {
-            console.error("Invalid JWT format.");
-          }
-        } else {
-          console.error("Token is empty or undefined.");
-        }
-      } else {
+      if (!authHeader) {
         console.warn("Authorization header not found.");
         alert("로그인 실패: 서버에서 토큰을 전달하지 않았습니다.");
         return;
       }
 
-      if (response.ok) {
-        alert("로그인 성공!");
-        localStorage.setItem("loggedIn", "true"); // 로그인 상태 저장
-        setLoggedIn(true);
-        navigate("/member");
-      } else {
-        const errorData = await response.json();
-        alert(`로그인 실패: ${errorData.message}`);
+      const token = authHeader.replace("Bearer ", "").trim();
+      if (!token || token.split(".").length !== 3) {
+        console.error("Invalid JWT format.");
+        alert("서버에서 유효하지 않은 토큰을 전달했습니다.");
+        return;
       }
+
+      localStorage.setItem("authToken", token);
+
+      const decodedToken = parseJwt(token);
+      if (decodedToken?.memberId) {
+        localStorage.setItem("username", decodedToken.memberId);
+      } else {
+        console.warn("username not found in token payload.");
+      }
+
+      alert("로그인 성공!");
+      localStorage.setItem("loggedIn", "true");
+      setLoggedIn(true);
+      navigate("/member");
     } catch (error) {
       console.error("Error during login:", error);
       alert("로그인 중 오류가 발생했습니다.");
@@ -95,18 +83,15 @@ function LoginInput({ setLoggedIn }) {
     <div className="signup-container">
       <h1 className="signup-title">로그인</h1>
       <form className="signup-form" onSubmit={handleLogin}>
-        {/* 이메일 입력 */}
         <div className="input-group">
           <input
             type="email"
             placeholder="이메일 입력"
             className="signup-input"
-            value={member_id}
-            onChange={(e) => setMemberId(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-
-        {/* 비밀번호 입력 */}
         <div className="input-group">
           <input
             type="password"
@@ -116,8 +101,6 @@ function LoginInput({ setLoggedIn }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
-        {/* 로그인 버튼 */}
         <button type="submit" className="submit-btn">
           로그인
         </button>
