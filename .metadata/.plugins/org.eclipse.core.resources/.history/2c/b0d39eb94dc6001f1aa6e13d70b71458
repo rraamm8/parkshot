@@ -1,0 +1,63 @@
+package com.parkshot.service;
+
+import org.springframework.stereotype.Service;
+
+import com.parkshot.domain.Golfcourse;
+import com.parkshot.domain.Member;
+import com.parkshot.domain.Reservation;
+import com.parkshot.persistence.GolfcourseRepository;
+import com.parkshot.persistence.MemberRepository;
+import com.parkshot.persistence.ReservationRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class ReservationService {
+
+    private final ReservationRepository reservationRepo;
+    private final GolfcourseRepository golfCourseRepo;
+    private final MemberRepository memberRepo;
+
+    public Reservation createReservation(Reservation reservation) {
+        // 중복 예약 체크
+        boolean exists = reservationRepo.existsByGolfCourse_GolfCourseAndReservationDateAndReservationTime(
+        		reservation.getGolfCourse(),
+        		reservation.getReservationDate(),
+        		reservation.getReservationTime()
+        );
+
+        if (exists) {
+            throw new IllegalStateException("이미 해당 시간에 예약이 존재합니다.");
+        }
+
+        // 골프장 및 회원 정보 가져오기
+//        Golfcourse golfCourse = golfCourseRepo.findById(reservation())
+//            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 골프장 ID입니다."));
+//        Member member = memberRepo.findById(member.getMemberId())
+//            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 회원 ID입니다."));
+
+        // 예약 생성
+        Reservation reservation = Reservation.builder()
+            .golfCourse(golfCourse)
+            .member(member)
+            .reservationDate(reservation.getReservationDate())
+            .reservationTime(reservation.getReservationTime())
+            .status(Reservation.Status.CONFIRMED)
+            .build();
+
+        Reservation savedReservation = reservationRepo.save(reservation);
+
+        // 응답 DTO 반환
+        return ReservationResponseDto.builder()
+            .reservationId(savedReservation.getReservationId())
+            .courseName(golfCourse.getCourseName())
+            .memberName(member.getNickname())
+            .reservationDate(savedReservation.getReservationDate())
+            .reservationTime(savedReservation.getReservationTime())
+            .status(savedReservation.getStatus().toString())
+            .build();
+    }
+}

@@ -1,5 +1,9 @@
 package com.parkshot.controller;
 
+
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,43 +12,56 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.parkshot.domain.Member;
+import com.parkshot.persistence.MemberRepository;
 import com.parkshot.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/member")
 @CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService; // MemberService 주입
+	
+	@Autowired
+	private MemberRepository memberRepo;
 
-	@GetMapping("/login")
-	public void login() {
-		System.out.println("login 요청");
-	}
-
-	@GetMapping("/loginSuccess")
-	public void loginSuccess() {
-		System.out.println("loginSuccess 요청");
-	}
-
-	@GetMapping("/accessDenied")
-	public void accessDenied() {
-		System.out.println("accessDenied");
-	}
-
-	@PostMapping("/member/register")
+	@PostMapping("/register")
 	public ResponseEntity<String> registerMember(@RequestBody Member member) {
 		memberService.registerMember(member);
 		return ResponseEntity.ok("회원가입 성공");
 	}
 	
+	
+	@GetMapping("/checkUsername")
+    public ResponseEntity<?> checkEmail(@RequestParam String username) {
+        boolean exists = memberRepo.existsByUsername(username);
+        return ResponseEntity.ok(Map.of("available", !exists));
+    }
+
+    @GetMapping("/checkNickname")
+    public ResponseEntity<?> checkNickname(@RequestParam String nickname) {
+        boolean exists = memberRepo.existsByNickname(nickname);
+        return ResponseEntity.ok(Map.of("available", !exists));
+    }
+	
+
+	@PostMapping("/auth")
+	public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal User user) {
+		if (user == null) {
+			return ResponseEntity.ok("로그인 상태가 아닙니다.");
+		}
+		return ResponseEntity.ok(user);
+	}
 //	@PostMapping("/login")
 //	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
 //		boolean isValid = memberService.validateLogin(request.getMember_id(), request.getPassword());
@@ -62,14 +79,6 @@ public class MemberController {
 //
 //		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 //	}
-
-	@PostMapping("/auth")
-	public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal User user) {
-		if (user == null) {
-			return ResponseEntity.ok("로그인 상태가 아닙니다.");
-		}
-		return ResponseEntity.ok(user);
-	}
 //
 //	@GetMapping("/oauth")
 //	public @ResponseBody String auth(@AuthenticationPrincipal OAuth2User user) {

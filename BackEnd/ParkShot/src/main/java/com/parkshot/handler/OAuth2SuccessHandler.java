@@ -54,7 +54,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	    log.info("onAuthenticationSuccess: username = {}, name = {}", username, name);
 		
 		memberRepo.save(Member.builder()
-				.member_id(username)
+				.username(username)
 				.password(encoder.encode("1a2s3d4f"))
 				.role(Role.ROLE_MEMBER)
 				.nickname(name)

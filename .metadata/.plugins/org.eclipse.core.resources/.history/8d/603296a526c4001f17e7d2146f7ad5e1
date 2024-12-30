@@ -1,0 +1,63 @@
+package com.parkshot.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
+
+import com.parkshot.filter.JWTAuthenticationFilter;
+import com.parkshot.filter.JWTAuthorizationFilter;
+import com.parkshot.handler.OAuth2SuccessHandler;
+import com.parkshot.persistence.MemberRepository;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+	@Autowired
+	private OAuth2SuccessHandler successHandler;
+
+	@Autowired
+	private AuthenticationConfiguration authenticationConfiguration;
+
+	@Autowired
+	private MemberRepository memberRepo;
+
+	@Bean
+	SecurityFilterChain sequrityFilterChain(HttpSecurity http) throws Exception {
+
+		// CSRF 보호 비활성화
+				http.csrf(csrf -> csrf.disable());
+				// CORS 활성화
+				http.cors().and();
+
+				// 인증 및 권한 설정
+				http.authorizeHttpRequests(auth -> auth
+						.anyRequest().permitAll());
+
+				// 기본 로그인 페이지 설정
+				http.formLogin(form -> form.loginPage("/login")
+						.defaultSuccessUrl("/loginSuccess", true));
+				
+				// HTTP 기본 인증 비활성화
+				http.httpBasic(basic -> basic.disable());
+
+				// JWT 인증 필터 추가
+				http.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()));
+				
+				// JWT 권한 필터 추가
+				http.addFilterBefore(new JWTAuthorizationFilter(memberRepo), AuthorizationFilter.class);
+
+				// OAuth2 로그인 핸들러
+				http.oauth2Login(oauth2 -> oauth2.successHandler(successHandler));
+	}
+
+
+}

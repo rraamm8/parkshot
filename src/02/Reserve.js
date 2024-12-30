@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
+import Slider from "react-slick"; // react-slick 가져오기
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./Reserve.css";
 
 const Reserve = () => {
@@ -50,15 +53,37 @@ const Reserve = () => {
 
   // 검색 실행 함수
   const handleSearch = () => {
-    const results = golfCourses.filter(
-      (course) =>
-        course.name.toLowerCase().includes(searchTerm.toLowerCase().trim()) ||
-        course.region.toLowerCase().includes(searchTerm.toLowerCase().trim())
-    );
+    const normalizedSearchTerm = searchTerm.trim(); // 검색어에서 공백 제거
+
+    // 검색 결과 필터링
+    const results = golfCourses.filter((course) => {
+      const normalizedName = course.name.trim(); // 이름에서 공백 제거
+      const normalizedRegion = course.region.trim(); // 지역 약칭에서 공백 제거
+      const normalizedLocation = course.location.trim(); // 상세 주소에서 공백 제거
+
+      // location에 검색어가 포함되거나, location이 검색어로 시작하는지 확인
+      const isLocationMatch =
+        normalizedLocation.includes(normalizedSearchTerm) ||
+        normalizedLocation.startsWith(normalizedSearchTerm);
+
+      return (
+        normalizedName.includes(normalizedSearchTerm) || // 이름 검색
+        normalizedRegion.includes(normalizedSearchTerm) || // 약칭(region) 검색
+        isLocationMatch // 상세 주소(location) 검색
+      );
+    });
+
+    // 검색 결과를 상태로 업데이트
     setFilteredCourses(results);
-    setSelectedCourse(null); // 검색 실행 시 선택된 구장을 초기화
-    setSelectedDate(null); // 날짜 초기화
-    setSelectedTime(null); // 시간 초기화
+
+    // 검색 실행 시 초기화
+    setSelectedCourse(null);
+    setSelectedDate(null);
+    setSelectedTime(null);
+
+    if (results.length === 0) {
+      alert("검색된 결과가 없습니다."); // 검색 결과 없음 알림
+    }
   };
 
   // 엔터 키 이벤트 핸들러
@@ -72,6 +97,76 @@ const Reserve = () => {
   const handleCourseSelect = (course) => {
     setSelectedCourse(course); // 선택된 구장을 저장
     setFilteredCourses([course]); // 선택된 구장만 남김
+  };
+
+  // 캐러셀 설정
+  const settings = {
+    dots: true, // 하단 점 표시 (필요에 따라 제거 가능)
+    infinite: true, // 무한 루프 활성화
+    speed: 500, // 슬라이드 전환 속도
+    slidesToShow: 1, // 한 번에 보여줄 슬라이드 개수
+    slidesToScroll: 1, // 한 번에 이동할 슬라이드 개수
+    arrows: true, // 좌우 화살표 활성화
+    autoplay: false, // 자동 이동 비활성화
+  };
+
+  // const decodeJwt = (token) => {
+  //   if (!token) {
+  //     throw new Error("토큰이 없습니다. 로그인이 필요합니다.");
+  //   }
+
+  //   // JWT는 header.payload.signature 형식으로 구성
+  //   const base64Url = token.split(".")[1]; // payload 부분 추출
+  //   if (!base64Url) {
+  //     throw new Error("유효하지 않은 토큰 형식입니다.");
+  //   }
+
+  //   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  //   const jsonPayload = decodeURIComponent(
+  //     atob(base64)
+  //       .split("")
+  //       .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+  //       .join("")
+  //   );
+
+  //   return JSON.parse(jsonPayload);
+  // };
+
+  // const getMemberIdFromToken = () => {
+  //   const token = localStorage.getItem("token"); // 또는 sessionStorage에서 가져옴
+  //   if (!token) {
+  //     throw new Error("로그인이 필요합니다.");
+  //   }
+
+  //   const decodedToken = decodeJwt(token);
+  //   return decodedToken.memberId; // 서버에서 `memberId`를 JWT payload에 포함해야 함
+  // };
+
+  const toLocalDateString = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const makeReservation = async () => {
+    try {
+      // const memberId = getMemberIdFromToken();
+      const localDateString = toLocalDateString(selectedDate);
+      const response = await axios.post(
+        "http://10.125.121.226:8080/reservations",
+        {
+          courseId: selectedCourse.courseId,
+          memberId: "123@123",
+          reservationDate: localDateString, // 날짜를 ISO 형식으로
+          reservationTime: selectedTime,
+        }
+      );
+      alert("예약 성공!"); // 성공 메시지 표시
+    } catch (error) {
+      console.error("예약 중 오류 발생:", error);
+      alert(error.response?.data || "예약 실패");
+    }
   };
 
   return (
@@ -114,6 +209,24 @@ const Reserve = () => {
         ))}
       </div>
 
+      {/* 사진 캐러셀 */}
+      {selectedCourse && (
+        <div className="carousel-container">
+          <h2>{selectedCourse.name}의 이미지</h2>
+          <Slider {...settings}>
+            {["first", "second", "third"].map((name, index) => (
+              <div key={index}>
+                <img
+                  src={`http://10.125.121.226:8080/images/${selectedCourse.courseId}_${name}.jpg`}
+                  alt={`${selectedCourse.name} 이미지 ${index + 1}`}
+                  style={{ width: "100%", height: "auto" }}
+                />
+              </div>
+            ))}
+          </Slider>
+        </div>
+      )}
+
       {/* 날짜 선택 */}
       {selectedCourse && (
         <div className="date-picker">
@@ -143,9 +256,7 @@ const Reserve = () => {
       {/* 예약 버튼 */}
       {selectedTime && (
         <div className="confirm-reservation">
-          <button onClick={() => alert(`예약 완료: ${selectedDate}, ${selectedTime}`)}>
-            예약하기
-          </button>
+          <button onClick={makeReservation}>예약하기</button>
         </div>
       )}
     </div>

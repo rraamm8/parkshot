@@ -106,16 +106,16 @@ function Map() {
         const data = await response.json(); // API 데이터 JSON으로 변환
         setGolfCourses(data); // 전체 골프장 데이터 저장
 
-        // 주소를 기반으로 지오코딩 수행
-        const locations = await Promise.all(
-          data.map(async (item) => {
-            const geo = await fetchGeocode(item.location); // 지오코딩 수행
-            return geo ? { ...geo, name: item.name } : null; // 결과가 있으면 반환
-          })
-        );
+        // // 주소를 기반으로 지오코딩 수행
+        // const locations = await Promise.all(
+        //   data.map(async (item) => {
+        //     const geo = await fetchGeocode(item.location); // 지오코딩 수행
+        //     return geo ? { ...geo, name: item.name } : null; // 결과가 있으면 반환
+        //   })
+        // );
 
-        setMarkers(locations.filter((loc) => loc !== null)); // 유효한 마커만 저장
-        setIsDataLoaded(true); // 데이터 로드 완료 상태 설정
+        // setMarkers(locations.filter((loc) => loc !== null)); // 유효한 마커만 저장
+        // setIsDataLoaded(true); // 데이터 로드 완료 상태 설정
       } catch (error) {
         console.error("Error fetching golf course data:", error); // 데이터 가져오기 오류 처리
       }
@@ -127,7 +127,7 @@ function Map() {
   return (
     <NavermapsProvider>
       <MapDiv className="map-wrapper">
-        <MyMap area={area} markers={markers}/> {/* MyMap 컴포넌트 렌더링 */}
+        <MyMap area={area} markers={markers} /> {/* MyMap 컴포넌트 렌더링 */}
       </MapDiv>
       {/* 검색 필드와 버튼 */}
       <div className="search-container">
@@ -161,7 +161,8 @@ function Map() {
               }}
               style={{ cursor: "pointer" }}
             >
-              <strong>{result.name}</strong> - {result.location} {/* 검색 결과 */}
+              <strong>{result.name}</strong> - {result.location}{" "}
+              {/* 검색 결과 */}
             </div>
           ))}
         </div>
