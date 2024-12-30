@@ -3,20 +3,18 @@ import { useNavigate } from "react-router-dom";
 import "./MyPage.css";
 
 function MyPage() {
-  const [userInfo, setUserInfo] = useState({ nickname: "", email: "" });
+  const [userInfo, setUserInfo] = useState({ email: "" });
   const [reservations, setReservations] = useState([]); // 예약 목록
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
-    const nickname = localStorage.getItem("nickname");
 
-    console.log("Stored values from localStorage:", { storedUsername, nickname }); // 디버깅
+    console.log("Stored values from localStorage:", { storedUsername }); // 디버깅
 
-    if (storedUsername || nickname) {
+    if (storedUsername) {
       setUserInfo({
         email: storedUsername || "이메일 없음",
-        nickname: nickname || "닉네임 없음",
       });
     }
   }, []);
@@ -43,7 +41,6 @@ function MyPage() {
 
       {/* 사용자 정보 표시 */}
       <div className="mypage-info">
-        <p><strong>닉네임:</strong> {userInfo.nickname}</p>
         <p><strong>이메일:</strong> {userInfo.email}</p>
         <button
           className="mypage-password-button"

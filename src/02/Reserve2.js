@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import axios from "axios";
@@ -19,7 +19,6 @@ const Reserve = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { courseId } = useParams(); // URL에서 courseId 가져오기
   const selectedCourseFromMap = location.state?.course; // Map.js에서 전달된 골프장 데이터
 
   // API에서 구장 데이터 가져오기
@@ -31,28 +30,17 @@ const Reserve = () => {
         );
         setGolfCourses(response.data);
         setFilteredCourses(response.data); // 초기에는 모든 구장을 표시
-
-        // 기존 코드 문제: URL의 courseId를 처리하지 않음
-        // 수정: courseId가 존재하면 해당 골프장을 선택
-        if (courseId) {
-          const course = response.data.find(
-            (course) => course.courseId.toString() === courseId
-          );
-          if (course) {
-            setSelectedCourse(course);
-            setFilteredCourses([course]);
-          }
-        }
       } catch (error) {
         console.error("구장 정보를 가져오는 중 오류 발생:", error);
       }
     };
     fetchCourses();
-  }, [courseId]); // courseId가 변경될 때마다 실행
+  }, []);
 
   // 날짜 선택 시 시간대 업데이트
   useEffect(() => {
     if (selectedCourse && selectedDate) {
+      // 시간대 변경
       const generatedTimeSlots = [
         "09:00",
         "10:00",
@@ -64,71 +52,112 @@ const Reserve = () => {
         "17:00",
       ];
       setTimeSlots(generatedTimeSlots);
-      setSelectedTime(null);
+      setSelectedTime(null); // 시간 선택 초기화
     }
   }, [selectedCourse, selectedDate]);
 
-  // 기존 코드 문제: Map.js에서 전달된 상태와 URL courseId를 동시에 처리하지 않음
-  // 수정: URL courseId와 Map.js 상태 모두 처리
+  // Map.js에서 예약하기 연결
   useEffect(() => {
     if (selectedCourseFromMap) {
-      setSelectedCourse(selectedCourseFromMap);
+      setSelectedCourse(selectedCourseFromMap); // 선택된 골프장 설정
     }
   }, [selectedCourseFromMap]);
 
   // 검색 실행 함수
   const handleSearch = () => {
-    const normalizedSearchTerm = searchTerm.trim();
+    const normalizedSearchTerm = searchTerm.trim(); // 검색어에서 공백 제거
 
+    // 검색 결과 필터링
     const results = golfCourses.filter((course) => {
-      const normalizedName = course.name.trim();
-      const normalizedRegion = course.region.trim();
-      const normalizedLocation = course.location.trim();
+      const normalizedName = course.name.trim(); // 이름에서 공백 제거
+      const normalizedRegion = course.region.trim(); // 지역 약칭에서 공백 제거
+      const normalizedLocation = course.location.trim(); // 상세 주소에서 공백 제거
 
+      // location에 검색어가 포함되거나, location이 검색어로 시작하는지 확인
       const isLocationMatch =
         normalizedLocation.includes(normalizedSearchTerm) ||
         normalizedLocation.startsWith(normalizedSearchTerm);
 
       return (
-        normalizedName.includes(normalizedSearchTerm) ||
-        normalizedRegion.includes(normalizedSearchTerm) ||
-        isLocationMatch
+        normalizedName.includes(normalizedSearchTerm) || // 이름 검색
+        normalizedRegion.includes(normalizedSearchTerm) || // 약칭(region) 검색
+        isLocationMatch // 상세 주소(location) 검색
       );
     });
 
+    // 검색 결과를 상태로 업데이트
     setFilteredCourses(results);
+
+    // 검색 실행 시 초기화
     setSelectedCourse(null);
     setSelectedDate(null);
     setSelectedTime(null);
 
     if (results.length === 0) {
-      alert("검색된 결과가 없습니다.");
+      alert("검색된 결과가 없습니다."); // 검색 결과 없음 알림
     }
 
-    setSearchTerm("");
+    // 검색어 초기화
+    setSearchTerm(""); // input 창 비우기
+
   };
 
+  // 엔터 키 이벤트 핸들러
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
 
+  // 골프장 선택 시 처리
   const handleCourseSelect = (course) => {
-    setSelectedCourse(course);
-    setFilteredCourses([course]);
+    setSelectedCourse(course); // 선택된 구장을 저장
+    setFilteredCourses([course]); // 선택된 구장만 남김
     navigate(`/reserve/${course.courseId}`, { state: { course } });
   };
 
+  // 캐러셀 설정
   const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: true,
-    autoplay: false,
+    dots: true, // 하단 점 표시 (필요에 따라 제거 가능)
+    infinite: true, // 무한 루프 활성화
+    speed: 500, // 슬라이드 전환 속도
+    slidesToShow: 1, // 한 번에 보여줄 슬라이드 개수
+    slidesToScroll: 1, // 한 번에 이동할 슬라이드 개수
+    arrows: true, // 좌우 화살표 활성화
+    autoplay: false, // 자동 이동 비활성화
   };
+
+  // const decodeJwt = (token) => {
+  //   if (!token) {
+  //     throw new Error("토큰이 없습니다. 로그인이 필요합니다.");
+  //   }
+
+  //   // JWT는 header.payload.signature 형식으로 구성
+  //   const base64Url = token.split(".")[1]; // payload 부분 추출
+  //   if (!base64Url) {
+  //     throw new Error("유효하지 않은 토큰 형식입니다.");
+  //   }
+
+  //   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  //   const jsonPayload = decodeURIComponent(
+  //     atob(base64)
+  //       .split("")
+  //       .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+  //       .join("")
+  //   );
+
+  //   return JSON.parse(jsonPayload);
+  // };
+
+  // const getMemberIdFromToken = () => {
+  // const token = localStorage.getItem("username"); // 또는 sessionStorage에서 가져옴
+  //   if (!token) {
+  //     throw new Error("로그인이 필요합니다.");
+  //   }
+
+  //   const decodedToken = decodeJwt(token);
+  //   return decodedToken.memberId; // 서버에서 `memberId`를 JWT payload에 포함해야 함
+  // };
 
   const toLocalDateString = (date) => {
     const year = date.getFullYear();
@@ -146,11 +175,11 @@ const Reserve = () => {
         {
           courseId: selectedCourse.courseId,
           memberId: memberId,
-          reservationDate: localDateString,
+          reservationDate: localDateString, // 날짜를 ISO 형식으로
           reservationTime: selectedTime,
         }
       );
-      alert("예약 성공!");
+      alert("예약 성공!"); // 성공 메시지 표시
     } catch (error) {
       console.error("예약 중 오류 발생:", error);
       alert(error.response?.data || "예약 실패");
@@ -161,30 +190,30 @@ const Reserve = () => {
     <div className="reserve-container">
       <h1>골프장 예약하기</h1>
 
+      {/* 검색창 */}
       <div className="search-courses">
+        {/* <h2>골프장 검색</h2> */}
         <div className="search-input-container">
           <input
             type="text"
             placeholder="골프장을 검색하세요."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyPress}
+            onKeyDown={handleKeyPress} // 엔터 키 이벤트
           />
-          <button onClick={handleSearch}>검색</button>
+          <button onClick={handleSearch}>검색</button> {/* 검색 버튼 */}
         </div>
       </div>
 
+      {/* 골프장 목록 */}
       <div
-        className={`course-grid ${
-          filteredCourses.length === 1 ? "single" : ""
-        }`}
+        className={`course-grid ${filteredCourses.length === 1 ? "single" : ""
+          }`}
       >
         {filteredCourses.map((course) => (
           <div
             key={course.courseId}
-            className={`course-card ${
-              selectedCourse === course ? "selected" : ""
-            }`}
+            className={`course-card ${selectedCourse === course ? "selected" : ""}`}
             onClick={() => handleCourseSelect(course)}
           >
             <h3>{course.name}</h3>
@@ -194,12 +223,13 @@ const Reserve = () => {
         ))}
       </div>
 
+      {/* 전체 리스트로 돌아가기 버튼 */}
       {selectedCourse && (
         <div className="back-to-list">
           <button
             onClick={() => {
-              setSelectedCourse(null);
-              setFilteredCourses(golfCourses);
+              setSelectedCourse(null); // 선택된 골프장 초기화
+              setFilteredCourses(golfCourses); // 전체 리스트 복원
             }}
           >
             전체 리스트로 돌아가기
@@ -207,6 +237,7 @@ const Reserve = () => {
         </div>
       )}
 
+      {/* 사진 캐러셀 */}
       {selectedCourse && (
         <div className="carousel-container">
           <h2>{selectedCourse.name}의 이미지</h2>
@@ -224,6 +255,7 @@ const Reserve = () => {
         </div>
       )}
 
+      {/* 날짜 선택 */}
       {selectedCourse && (
         <div className="date-picker">
           <h2>날짜 선택</h2>
@@ -231,6 +263,7 @@ const Reserve = () => {
         </div>
       )}
 
+      {/* 시간 선택 */}
       {selectedDate && (
         <div className="time-picker">
           <h2>시간 선택</h2>
@@ -238,7 +271,7 @@ const Reserve = () => {
             {timeSlots.map((time, index) => (
               <li
                 key={index}
-                onClick={() => setSelectedTime(time)}
+                onClick={() => setSelectedTime(time)} // 시간 선택 처리
                 className={selectedTime === time ? "selected" : ""}
               >
                 {time}
@@ -248,6 +281,7 @@ const Reserve = () => {
         </div>
       )}
 
+      {/* 예약 버튼 */}
       {selectedTime && (
         <div className="confirm-reservation">
           <button onClick={makeReservation}>예약하기</button>
