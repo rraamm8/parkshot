@@ -125,6 +125,7 @@ function App() {
             <Route path="/oauth2/redirect" element={<OAuthRedirect setLoggedIn={setLoggedIn} />} />
             <Route path="/map" element={<Map />} />
             <Route path="/reserve" element={<Reserve />} />
+            <Route path="/reserve/:courseId" element={<Reserve />} />
             <Route path="/board" element={<Board />} />
             <Route path="/board/write" element={<BoardWrite />} />
             <Route path="/board/:id" element={<BoardView />} />
