@@ -207,3 +207,66 @@
 .confirm-reservation button:hover {
     background-color: #005bb5;
 }
+
+.carousel-container {
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+.carousel-container img {
+    display: block;
+    margin: 0 auto;
+    max-height: 400px; /* 이미지 높이 제한 */
+    object-fit: cover; /* 이미지 비율 유지 */
+}
+
+/* 좌우 화살표 위치 및 스타일 */
+.slick-prev,
+.slick-next {
+    z-index: 10; /* 화살표를 다른 요소보다 위에 표시 */
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* 화살표 hover 상태 */
+.slick-prev:hover,
+.slick-next:hover {
+    background: rgba(0, 0, 0, 0.7); /* hover 시 더 어두운 회색 */
+    color: white;
+}
+
+/* 화살표 active 상태 */
+.slick-prev:active,
+.slick-next:active {
+    background: rgba(0, 0, 0, 0.5); /* active 상태에서도 회색 유지 */
+    color: white;
+}
+
+.slick-prev {
+    left: -40px; /* 화살표 왼쪽 위치 */
+}
+
+.slick-next {
+    right: -40px; /* 화살표 오른쪽 위치 */
+}
+
+.slick-prev::before,
+.slick-next::before {
+    font-size: 20px; /* 화살표 크기 조정 */
+    color: white; /* 화살표 색상 */
+}
+
+/* 기본 화살표 아이콘의 hover, active 상태 */
+.slick-prev:hover::before,
+.slick-next:hover::before,
+.slick-prev:active::before,
+.slick-next:active::before {
+    color: white; /* 화살표 색상 유지 */
+}

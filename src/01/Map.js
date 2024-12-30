@@ -21,65 +21,65 @@ function Map() {
   // 검색어가 URL에서 전달된 경우 초기화
   useEffect(() => {
     const query = searchParams.get("query"); // URL에서 'query' 파라미터 가져오기
-    if (query) {
+    if (query && isDataLoaded) {
       setSearchInput(query); // 검색어를 상태에 저장
-      // 데이터 로드 이후 검색 실행
-      if (isDataLoaded) {
-        handleSearch(query);
-      }
+      handleSearch(query); // 데이터 로드 이후 검색 실행
     }
-  }, [searchParams, isDataLoaded]); // 데이터 로드 여부와 검색 파라미터 의존
+  }, [searchParams, isDataLoaded]); // 의존성: 검색 파라미터와 데이터 로드 상태
 
-  // 검색 기능
-  const handleSearch = async (query = searchInput) => {
-    if (!query.trim()) {
-      alert("검색어를 입력해주세요."); // 검색어가 없을 때 경고
-      return;
-    }
-    // 검색어 정규화
-    const normalizedSearchInput = query.trim().toLowerCase();
+  // 골프장 데이터를 미리 정규화하여 캐싱 (검색 시 반복 작업 제거)
+  const normalizedGolfCourses = golfCourses.map((course) => ({
+    ...course,
+    normalizedName: course.name.trim(), // 공백 제거
+    normalizedRegion: course.region.trim(), 
+    normalizedLocation: course.location.trim(), 
+  }));
 
-    // 검색 결과 필터링
-    const filteredCourses = golfCourses.filter((course) => {
-      const normalizedName = course.name.toLowerCase(); // 골프장 이름 정규화
-      const normalizedLocation = course.location.toLowerCase(); // 골프장 주소 정규화
+  // 검색 실행 함수
+  const handleSearch = (query = searchInput) => {
+    const normalizedSearchTerm = query.trim(); // 입력된 검색어에서 공백 제거
 
-      return (
-        normalizedName.includes(normalizedSearchInput) || // 이름 검색
-        normalizedLocation.includes(normalizedSearchInput) // 주소 검색
-      );
-    });
+    // 미리 정규화된 데이터를 사용해 검색 결과 필터링
+    const results = normalizedGolfCourses.filter((course) =>
+      course.normalizedName.includes(normalizedSearchTerm) || 
+      course.normalizedRegion.includes(normalizedSearchTerm) || 
+      course.normalizedLocation.includes(normalizedSearchTerm) 
+    );
 
-    // 검색 결과 업데이트
-    setSearchResults(filteredCourses);
+    // 필터링된 결과를 상태에 저장
+    setSearchResults(results);
 
-    if (filteredCourses.length === 0) {
-      alert("검색된 결과가 없습니다."); // 검색 결과가 없을 때 경고
+    // 검색 결과가 없을 경우 알림
+    if (results.length === 0) {
+      alert("검색된 결과가 없습니다."); // 검색 결과 없음 알림
+    } else {
+      setArea(results[0].location); // 검색 결과 중 첫 번째 항목의 위치를 지도에 반영
     }
   };
+
 
   // 주소를 지오코딩
-  const fetchGeocode = async (address) => {
-    if (!navermaps?.Service?.geocode) {
-      console.error("Geocoding service is not available."); // 지오코딩 서비스 오류
-      return null;
-    }
+  // const fetchGeocode = async (address) => {
+  //   if (!navermaps?.Service?.geocode) {
+  //     console.error("Geocoding service is not available."); // 지오코딩 서비스 오류
+  //     return null;
+  //   }
 
-    return new Promise((resolve) => {
-      navermaps.Service.geocode({ query: address }, (status, response) => {
-        if (
-          status === navermaps.Service.Status.OK &&
-          response.v2.addresses.length > 0
-        ) {
-          const { x, y } = response.v2.addresses[0]; // 주소의 위도, 경도 추출
-          resolve({ lat: parseFloat(y), lng: parseFloat(x) }); // 지오코딩 결과 반환
-        } else {
-          console.error(`Failed to geocode address: ${address}`); // 지오코딩 실패
-          resolve(null);
-        }
-      });
-    });
-  };
+  //   return new Promise((resolve) => {
+  //     navermaps.Service.geocode({ query: address }, (status, response) => {
+  //       if (
+  //         status === navermaps.Service.Status.OK &&
+  //         response.v2.addresses.length > 0
+  //       ) {
+  //         const { x, y } = response.v2.addresses[0]; // 주소의 위도, 경도 추출
+  //         resolve({ lat: parseFloat(y), lng: parseFloat(x) }); // 지오코딩 결과 반환
+  //       } else {
+  //         console.error(`Failed to geocode address: ${address}`); // 지오코딩 실패
+  //         resolve(null);
+  //       }
+  //     });
+  //   });
+  // };
 
   // 골프장 데이터 가져오기
   useEffect(() => {
