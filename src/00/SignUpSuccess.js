@@ -9,10 +9,10 @@ function SignUpSuccess() {
         축하합니다! 회원가입이 완료되었습니다.
       </p>
       <Link
-        to="/member"
+        to="/login"
         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-800 transition"
       >
-        홈으로 이동
+        로그인으로 이동
       </Link>
     </div>
   );

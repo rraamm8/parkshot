@@ -11,7 +11,6 @@ import SignUp3 from "./00/SignUp3";
 import SignUpSuccess from "./00/SignUpSuccess";
 import LoginInput from "./00/LoginInput";
 import Login from "./00/Login";
-import MyPage from "./00/MyPage";
 import OAuthRedirect from "./00/OAuthRedirect";
 import Map from "./01/Map";
 import Reserve from "./02/Reserve";
@@ -20,6 +19,7 @@ import Board from "./04/Board";
 import BoardWrite from "./04/BoardWrite";
 import BoardView from "./04/BoardView";
 import BoardEdit from "./04/BoardEdit";
+import MyPage from "./05/MyPage";
 import Contact from "./06/Contact";
 
 // NavBar 컴포넌트
