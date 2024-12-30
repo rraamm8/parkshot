@@ -9,7 +9,8 @@ import com.parkshot.domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
 	// Optional<Member> findByMember_id(String member_id);
-	 boolean existsByUsername(String username);
+	boolean existsByUsername(String username);
 	boolean existsByNickname(String nickname);
 	Optional<Member> findByUsername(String username);
+
 }

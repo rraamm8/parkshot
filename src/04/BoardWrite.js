@@ -8,7 +8,7 @@ function BoardWrite() {
 
   const handleSubmit = async () => {
     // 로컬 스토리지에서 member_id 가져오기
-    const memberId = localStorage.getItem("member_id");
+    const memberId = localStorage.getItem("username");
     console.log("Fetched member_id:", memberId); // 디버깅용 로그
 
     if (!memberId) {
@@ -24,7 +24,7 @@ function BoardWrite() {
 
     try {
       const response = await fetch(
-        `http://10.125.121.226:8080/boards?memberId=${memberId}`,
+        `http://10.125.121.226:8080/boards?username=${memberId}`,
         {
           method: "POST",
           headers: {

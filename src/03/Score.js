@@ -132,26 +132,52 @@ function Score() {
       </div>
       {/* 스코어보드 */}
       <div className="score">
-        {holes.length > 0 && (
-          <table className="score-table">
-            <thead>
-              <tr>
-                <th>Hole</th>
-                <th>Par</th>
-                <th>Distance (m)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {holes.map((hole, index) => (
-                <tr key={index}>
-                  <td>{hole.holeName}</td>
-                  <td>{hole.par}</td>
-                  <td>{hole.distance}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+        {holes.length > 0 &&
+          // holeName별로 그룹화
+          [...new Set(holes.map((hole) => hole.holeName))].map((holeName) => {
+            // 해당 holeName에 해당하는 홀 필터링
+            const holesByName = holes.filter(
+              (hole) => hole.holeName === holeName
+            );
+
+            return (
+              <div key={holeName} className="hole-section">
+                <h2>{holeName} 홀</h2>
+                <table className="score-table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      {holesByName.map((hole, index) => (
+                        <th key={index}>
+                          {holeName}-{index + 1}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Par</td>
+                      {holesByName.map((hole, index) => (
+                        <td key={index}>{hole.par}</td>
+                      ))}
+                    </tr>
+                    <tr>
+                      <td>My Score</td>
+                      {holesByName.map((hole, index) => (
+                        <td key={index}></td>
+                      ))}
+                    </tr>
+                    <tr>
+                      <td>Distance (m)</td>
+                      {holesByName.map((hole, index) => (
+                        <td key={index}>{hole.distance}</td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            );
+          })}
       </div>
     </main>
   );

@@ -128,7 +128,7 @@ function SignUp2() {
         navigate("/signup-success");
       } else {
         const errorData = await signUpResponse.json();
-        alert(`회원가입 실패: ${errorData.message}`);
+        alert(`회원가입 실패: ${errorData.message || "알 수 없는 오류"}`);
       }
     } catch (error) {
       console.error("회원가입 중 오류:", error);
