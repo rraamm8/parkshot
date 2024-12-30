@@ -37,7 +37,7 @@ function SignUp3() {
       alert("닉네임 중복 확인 중 오류가 발생했습니다.");
     }
   };
-
+  
   const handleAdditionalInfo = async (e) => {
     e.preventDefault();
 

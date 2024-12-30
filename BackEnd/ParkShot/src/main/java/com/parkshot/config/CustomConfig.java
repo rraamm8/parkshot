@@ -9,14 +9,12 @@ public class CustomConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		// 모든주소
-		registry.addMapping("/**") // 모든 경로에 대한 cors 설정 적용
-				.allowedOriginPatterns("*") // 모든 도메인에서의 요청 허용
-				// .allowedOrigins("http://localhost:3000","http://10.125.121.213:3000")
-				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 모든 HTTP 메소드 허용
-				.allowedHeaders("*") // 모든 헤더를 허용
-				.allowCredentials(true) // 쿠키와 같은 자격증명을 포함한 요청 허용
-				.exposedHeaders("Authorization"); // 클라이언트가 접근할 수 있는 응답 헤더
+		// 모든 주소에 대해 CORS 설정 적용
+		registry.addMapping("/**") // 모든 경로 허용
+				.allowedOriginPatterns("*") // 모든 도메인 허용
+				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 허용된 HTTP 메소드
+				.allowedHeaders("*") // 모든 헤더 허용
+				.allowCredentials(true) // 인증 정보 포함 허용
+				.exposedHeaders("Authorization"); // 응답 헤더 노출
 	}
-
 }

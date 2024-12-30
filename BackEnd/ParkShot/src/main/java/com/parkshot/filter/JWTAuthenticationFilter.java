@@ -38,7 +38,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		try {
 			Member member = mapper.readValue(request.getInputStream(), Member.class);
 			// Security에게 자격 증명 요청에 필요한 객체 생성
-			Authentication authToken = new UsernamePasswordAuthenticationToken(member.getMember_id(),
+			Authentication authToken = new UsernamePasswordAuthenticationToken(member.getUsername(),
 					member.getPassword());
 			return authenticationManager.authenticate(authToken);
 			
