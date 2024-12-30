@@ -7,10 +7,12 @@ import "./App.css";
 import Home from "./00/Home";
 import SignUp1 from "./00/SignUp1";
 import SignUp2 from "./00/SignUp2";
+import SignUp3 from "./00/SignUp3";
 import SignUpSuccess from "./00/SignUpSuccess";
 import LoginInput from "./00/LoginInput";
 import Login from "./00/Login";
 import MyPage from "./00/MyPage";
+import OAuthRedirect from "./00/OAuthRedirect";
 import Map from "./01/Map";
 import Reserve from "./02/Reserve";
 import Score from "./03/Score";
@@ -99,34 +101,25 @@ function App() {
   return (
     <BrowserRouter>
       {/* 전체 레이아웃 */}
-      <div
-        className="w-full xl:w-10/12 h-screen mx-auto
-                      flex flex-col justify-center items-center"
-      >
+      <div className="w-full xl:w-10/12 h-screen mx-auto
+                      flex flex-col justify-center items-center">
         <header className="header">
           {/* NavBar에 로그인 상태 전달 */}
           <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </header>
 
-        <main
-          className="w-full flex-grow  
-                       flex flex-col items-center"
-        >
+        <main className="w-full flex-grow  
+                         flex flex-col items-center">
           <Routes>
-            {/* 라우트 설정 */}
             <Route path="/" element={<Home />} />
             <Route path="/member" element={<Home />} />
             <Route path="/signup1" element={<SignUp1 />} />
             <Route path="/signup2" element={<SignUp2 />} />
-            <Route path="/loginSuccess" element={<SignUpSuccess />} />
-            <Route
-              path="/login"
-              element={<Login setLoggedIn={setLoggedIn} />}
-            />
-            <Route
-              path="/login-input"
-              element={<LoginInput setLoggedIn={setLoggedIn} />}
-            />
+            <Route path="/signup3" element={<SignUp3 />} />
+            <Route path="/signup-success" element={<SignUpSuccess />} />
+            <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
+            <Route path="/login-input" element={<LoginInput setLoggedIn={setLoggedIn} />} />
+            <Route path="/oauth2/redirect" element={<OAuthRedirect setLoggedIn={setLoggedIn} />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/map" element={<Map />} />
             <Route path="/reserve" element={<Reserve />} />
@@ -139,11 +132,9 @@ function App() {
           </Routes>
         </main>
 
-        <footer
-          className="w-full h-20 flex-shrink-0
+        <footer className="w-full h-20 flex-shrink-0
                            flex justify-center items-center
-                           bg-black text-white"
-        >
+                           bg-black text-white">
           <p>K-digital 8기 미니프로젝트</p>
         </footer>
       </div>

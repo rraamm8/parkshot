@@ -129,3 +129,10 @@
 .submit-btn:hover {
   background-color: #3367d6; /* 호버 시 어두운 파란색 */
 }
+
+.error-message {
+  margin-left: 5px;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

@@ -22,7 +22,8 @@ import lombok.ToString;
 public class Member {
 	@Id
 	@Column(name = "member_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @GeneratedValue(strategy = GenerationType.IDENTITY) 
+	// @GeneratedValue와 @Id 매핑문제로 데이터베이스의 상태와 애플리케이션의 상태 간에 동기화 문제
 	private String username;
 	
 	private String nickname;

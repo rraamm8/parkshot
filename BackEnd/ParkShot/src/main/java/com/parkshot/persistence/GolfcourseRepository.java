@@ -1,6 +1,7 @@
 package com.parkshot.persistence;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface GolfcourseRepository extends JpaRepository<Golfcourse, Integer>
 	List<Golfcourse> findByNameContaining (String name);
 
 	List<Golfcourse> findByLocationContainingOrRegionContaining (String location, String region);
+
+	Optional<Golfcourse> findById(Integer courseId);
 }

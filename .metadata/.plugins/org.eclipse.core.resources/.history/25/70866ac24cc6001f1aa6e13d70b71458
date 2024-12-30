@@ -1,0 +1,17 @@
+package com.parkshot.persistence;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.parkshot.domain.Reservation;
+
+public interface ReservationRespository extends JpaRepository<Reservation, Long> {
+	boolean existsByGolfCourse_CourseIdAndReservationDateAndReservationTime(
+	        Long courseId,
+	        LocalDate reservationDate,
+	        LocalTime reservationTime
+	    );
+
+}
