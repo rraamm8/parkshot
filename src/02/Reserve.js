@@ -84,6 +84,10 @@ const Reserve = () => {
     if (results.length === 0) {
       alert("검색된 결과가 없습니다."); // 검색 결과 없음 알림
     }
+
+    // 검색어 초기화
+    setSearchTerm(""); // input 창 비우기
+
   };
 
   // 엔터 키 이벤트 핸들러
@@ -133,7 +137,7 @@ const Reserve = () => {
   // };
 
   // const getMemberIdFromToken = () => {
-  //   const token = localStorage.getItem("token"); // 또는 sessionStorage에서 가져옴
+    // const token = localStorage.getItem("username"); // 또는 sessionStorage에서 가져옴
   //   if (!token) {
   //     throw new Error("로그인이 필요합니다.");
   //   }
@@ -151,13 +155,13 @@ const Reserve = () => {
 
   const makeReservation = async () => {
     try {
-      // const memberId = getMemberIdFromToken();
+      const memberId = localStorage.getItem("username");
       const localDateString = toLocalDateString(selectedDate);
       const response = await axios.post(
         "http://10.125.121.226:8080/reservations",
         {
           courseId: selectedCourse.courseId,
-          memberId: "123@123",
+          memberId: memberId,
           reservationDate: localDateString, // 날짜를 ISO 형식으로
           reservationTime: selectedTime,
         }
@@ -190,16 +194,14 @@ const Reserve = () => {
 
       {/* 골프장 목록 */}
       <div
-        className={`course-grid ${
-          filteredCourses.length === 1 ? "single" : ""
-        }`}
+        className={`course-grid ${filteredCourses.length === 1 ? "single" : ""
+          }`}
       >
         {filteredCourses.map((course) => (
           <div
             key={course.courseId}
-            className={`course-card ${
-              selectedCourse === course ? "selected" : ""
-            }`}
+            className={`course-card ${selectedCourse === course ? "selected" : ""
+              }`}
             onClick={() => handleCourseSelect(course)}
           >
             <h3>{course.name}</h3>
@@ -208,6 +210,20 @@ const Reserve = () => {
           </div>
         ))}
       </div>
+
+      {/* 전체 리스트로 돌아가기 버튼 */}
+      {selectedCourse && (
+        <div className="back-to-list">
+          <button
+            onClick={() => {
+              setSelectedCourse(null); // 선택된 골프장 초기화
+              setFilteredCourses(golfCourses); // 전체 리스트 복원
+            }}
+          >
+            전체 리스트로 돌아가기
+          </button>
+        </div>
+      )}
 
       {/* 사진 캐러셀 */}
       {selectedCourse && (

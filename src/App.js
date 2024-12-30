@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { NavermapsProvider } from "react-naver-maps";
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
 
 import "./App.css";
 
@@ -20,16 +19,20 @@ import BoardWrite from "./04/BoardWrite";
 import BoardView from "./04/BoardView";
 import BoardEdit from "./04/BoardEdit";
 import MyPage from "./05/MyPage";
+import ChangePW from "./05/ChangePW";
 import Contact from "./06/Contact";
 
 // NavBar 컴포넌트
 function NavBar({ loggedIn, setLoggedIn }) {
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // localStorage에서 토큰 제거
-    localStorage.removeItem("member_id"); // member_id 제거
+    localStorage.removeItem("username"); // username 제거
     localStorage.removeItem("loggedIn"); // 로그인 상태 제거
     setLoggedIn(false); // 로그인 상태 초기화
     alert("로그아웃 되었습니다!");
+    navigate("/"); // 로그아웃 후 홈 화면으로 이동
   };
 
   return (
@@ -37,7 +40,7 @@ function NavBar({ loggedIn, setLoggedIn }) {
       <ul className="nav-links">
         <li>
           {" "}
-          <Link to="/">Home</Link>{" "}
+          <Link to="/">파크샷 홈</Link>{" "}
         </li>
         <li>
           {" "}
@@ -120,7 +123,6 @@ function App() {
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path="/login-input" element={<LoginInput setLoggedIn={setLoggedIn} />} />
             <Route path="/oauth2/redirect" element={<OAuthRedirect setLoggedIn={setLoggedIn} />} />
-            <Route path="/mypage" element={<MyPage />} />
             <Route path="/map" element={<Map />} />
             <Route path="/reserve" element={<Reserve />} />
             <Route path="/board" element={<Board />} />
@@ -128,6 +130,8 @@ function App() {
             <Route path="/board/:id" element={<BoardView />} />
             <Route path="/board/edit/:id" element={<BoardEdit />} />
             <Route path="/score" element={<Score />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/change-password" element={<ChangePW />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
