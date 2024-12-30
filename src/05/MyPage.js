@@ -3,31 +3,39 @@ import { useNavigate } from "react-router-dom";
 import "./MyPage.css";
 
 function MyPage() {
-  const [userInfo, setUserInfo] = useState({ nickname: "", email: "", joinDate: "" });
+  const [userInfo, setUserInfo] = useState({ nickname: "", email: "" });
   const [reservations, setReservations] = useState([]); // 예약 목록
   const navigate = useNavigate();
 
-  // 사용자 정보 가져오기
   useEffect(() => {
-    fetch("http://10.125.121.226:8080/user")
-      .then((response) => response.json())
-      .then((data) => {
-        setUserInfo({
-          nickname: data.nickname,
-          email: data.email,
-          joinDate: data.joinDate ? new Date(data.joinDate).toLocaleDateString() : "" // 날짜 포맷
-        });
-      })
-      .catch((error) => console.error("Error fetching user info:", error));
+    const storedUsername = localStorage.getItem("username");
+    const nickname = localStorage.getItem("nickname");
+
+    console.log("Stored values from localStorage:", { storedUsername, nickname }); // 디버깅
+
+    if (storedUsername || nickname) {
+      setUserInfo({
+        email: storedUsername || "이메일 없음",
+        nickname: nickname || "닉네임 없음",
+      });
+    }
   }, []);
 
-  // 예약 목록 가져오기
   useEffect(() => {
-    fetch("http://10.125.121.226:8080/reservations")
+    const storedUsername = localStorage.getItem("username"); // 예약 목록에서 username 가져오기
+    if (!storedUsername) {
+      console.error("Username is null or undefined for reservations.");
+      return;
+    }
+
+    fetch(`http://10.125.121.226:8080/reservations/${storedUsername}`)
       .then((response) => response.json())
       .then((data) => setReservations(data || []))
       .catch((error) => console.error("Error fetching reservations:", error));
   }, []);
+
+  console.log("Rendering userInfo:", userInfo); // 렌더링 중 상태 확인
+
 
   return (
     <div className="mypage-container">
@@ -37,7 +45,6 @@ function MyPage() {
       <div className="mypage-info">
         <p><strong>닉네임:</strong> {userInfo.nickname}</p>
         <p><strong>이메일:</strong> {userInfo.email}</p>
-        <p><strong>가입일:</strong> {userInfo.joinDate}</p>
         <button
           className="mypage-password-button"
           onClick={() => navigate("/change-password")}
@@ -46,7 +53,6 @@ function MyPage() {
         </button>
       </div>
 
-      {/* 예약 목록 표시 */}
       <div className="mypage-reservations">
         <h2>내 골프장 예약 목록</h2>
         {reservations.length === 0 ? (
@@ -63,11 +69,11 @@ function MyPage() {
             </thead>
             <tbody>
               {reservations.map((reservation) => (
-                <tr key={reservation.id}>
-                  <td>{reservation.id}</td>
-                  <td>{reservation.golfCourseName}</td>
-                  <td>{reservation.date}</td>
-                  <td>{reservation.time}</td>
+                <tr key={reservation.reservationId}>
+                  <td>{reservation.reservationId}</td>
+                  <td>{reservation.courseId.name}</td>
+                  <td>{reservation.reservationDate}</td>
+                  <td>{reservation.reservationTime}</td>
                 </tr>
               ))}
             </tbody>

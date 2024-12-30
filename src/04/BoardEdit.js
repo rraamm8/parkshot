@@ -16,7 +16,7 @@ function BoardEdit() {
 
   const handleUpdate = () => {
     // 로컬 스토리지에서 member_id 가져오기
-    const memberId = localStorage.getItem("member_id");
+    const memberId = localStorage.getItem("username");
 
     if (!memberId) {
       alert("로그인 정보가 없습니다. 다시 로그인 해주세요.");
@@ -27,7 +27,7 @@ function BoardEdit() {
     const requestData = {
       title: post.title,
       content: post.content,
-      member_id: memberId, // 수정 시에도 member_id 포함
+      username: memberId, // 수정 시에도 member_id 포함
     };
 
     fetch(`http://10.125.121.226:8080/boards/${id}`, {

@@ -21,11 +21,11 @@ function Map() {
   // 검색어가 URL에서 전달된 경우 초기화
   useEffect(() => {
     const query = searchParams.get("query"); // URL에서 'query' 파라미터 가져오기
-    if (query && isDataLoaded) {
+    if (query) {
       setSearchInput(query); // 검색어를 상태에 저장
       handleSearch(query); // 데이터 로드 이후 검색 실행
     }
-  }, [searchParams, isDataLoaded]); // 의존성: 검색 파라미터와 데이터 로드 상태
+  }, [searchParams]); // 의존성: 검색 파라미터와 데이터 로드 상태
 
   // 골프장 데이터를 미리 정규화하여 캐싱 (검색 시 반복 작업 제거)
   const normalizedGolfCourses = golfCourses.map((course) => ({
@@ -57,29 +57,28 @@ function Map() {
     }
   };
 
-
   // 주소를 지오코딩
-  // const fetchGeocode = async (address) => {
-  //   if (!navermaps?.Service?.geocode) {
-  //     console.error("Geocoding service is not available."); // 지오코딩 서비스 오류
-  //     return null;
-  //   }
+  const fetchGeocode = async (address) => {
+    if (!navermaps?.Service?.geocode) {
+      console.error("Geocoding service is not available."); // 지오코딩 서비스 오류
+      return null;
+    }
 
-  //   return new Promise((resolve) => {
-  //     navermaps.Service.geocode({ query: address }, (status, response) => {
-  //       if (
-  //         status === navermaps.Service.Status.OK &&
-  //         response.v2.addresses.length > 0
-  //       ) {
-  //         const { x, y } = response.v2.addresses[0]; // 주소의 위도, 경도 추출
-  //         resolve({ lat: parseFloat(y), lng: parseFloat(x) }); // 지오코딩 결과 반환
-  //       } else {
-  //         console.error(`Failed to geocode address: ${address}`); // 지오코딩 실패
-  //         resolve(null);
-  //       }
-  //     });
-  //   });
-  // };
+    return new Promise((resolve) => {
+      navermaps.Service.geocode({ query: address }, (status, response) => {
+        if (
+          status === navermaps.Service.Status.OK &&
+          response.v2.addresses.length > 0
+        ) {
+          // const { x, y } = response.v2.addresses[0]; // 주소의 위도, 경도 추출
+          // resolve({ lat: parseFloat(y), lng: parseFloat(x) }); // 지오코딩 결과 반환
+        } else {
+          // console.error(`Failed to geocode address: ${address}`); // 지오코딩 실패
+          // resolve(null);
+        }
+      });
+    });
+  };
 
   // 골프장 데이터 가져오기
   useEffect(() => {
@@ -106,16 +105,16 @@ function Map() {
         const data = await response.json(); // API 데이터 JSON으로 변환
         setGolfCourses(data); // 전체 골프장 데이터 저장
 
-        // // 주소를 기반으로 지오코딩 수행
-        // const locations = await Promise.all(
-        //   data.map(async (item) => {
-        //     const geo = await fetchGeocode(item.location); // 지오코딩 수행
-        //     return geo ? { ...geo, name: item.name } : null; // 결과가 있으면 반환
-        //   })
-        // );
+        // 주소를 기반으로 지오코딩 수행
+        const locations = await Promise.all(
+          data.map(async (item) => {
+            const geo = await fetchGeocode(item.location); // 지오코딩 수행
+            return geo ? { ...geo, name: item.name } : null; // 결과가 있으면 반환
+          })
+        );
 
-        // setMarkers(locations.filter((loc) => loc !== null)); // 유효한 마커만 저장
-        // setIsDataLoaded(true); // 데이터 로드 완료 상태 설정
+        setMarkers(locations.filter((loc) => loc !== null)); // 유효한 마커만 저장
+        setIsDataLoaded(true); // 데이터 로드 완료 상태 설정
       } catch (error) {
         console.error("Error fetching golf course data:", error); // 데이터 가져오기 오류 처리
       }
