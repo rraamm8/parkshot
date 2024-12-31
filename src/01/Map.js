@@ -6,7 +6,7 @@ import {
 import MyMap from "./MyMap";
 import { useEffect, useState } from "react";
 import "./Map.css";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 function Map() {
   const navermaps = useNavermaps();
@@ -18,14 +18,17 @@ function Map() {
   const [markers, setMarkers] = useState([]); // 지도에 표시할 마커 데이터
   const [isDataLoaded, setIsDataLoaded] = useState(false); // 데이터 로드 상태
 
+  const navigate = useNavigate();
+
   // 검색어가 URL에서 전달된 경우 초기화
   useEffect(() => {
     const query = searchParams.get("query"); // URL에서 'query' 파라미터 가져오기
-    if (query) {
+    if (query && isDataLoaded) {
       setSearchInput(query); // 검색어를 상태에 저장
       handleSearch(query); // 데이터 로드 이후 검색 실행
+
     }
-  }, [searchParams]); // 의존성: 검색 파라미터와 데이터 로드 상태
+  }, [searchParams, isDataLoaded]); // 의존성: 검색 파라미터와 데이터 로드 상태
 
   // 골프장 데이터를 미리 정규화하여 캐싱 (검색 시 반복 작업 제거)
   const normalizedGolfCourses = golfCourses.map((course) => ({
@@ -37,6 +40,8 @@ function Map() {
 
   // 검색 실행 함수
   const handleSearch = (query = searchInput) => {
+    if (!isDataLoaded) return;
+
     const normalizedSearchTerm = query.trim(); // 입력된 검색어에서 공백 제거
 
     // 미리 정규화된 데이터를 사용해 검색 결과 필터링
@@ -55,6 +60,12 @@ function Map() {
     } else {
       setArea(results[0].location); // 검색 결과 중 첫 번째 항목의 위치를 지도에 반영
     }
+  };
+
+  // 예약 버튼 클릭 시 실행 함수
+  const handleReservationClick = (course) => {
+    navigate(`/reserve/${course.courseId}`); // URL에 courseId 추가해서 전달
+
   };
 
   // 주소를 지오코딩
@@ -104,6 +115,7 @@ function Map() {
         }
         const data = await response.json(); // API 데이터 JSON으로 변환
         setGolfCourses(data); // 전체 골프장 데이터 저장
+        setIsDataLoaded(true);
 
         // 주소를 기반으로 지오코딩 수행
         const locations = await Promise.all(
@@ -114,7 +126,6 @@ function Map() {
         );
 
         setMarkers(locations.filter((loc) => loc !== null)); // 유효한 마커만 저장
-        setIsDataLoaded(true); // 데이터 로드 완료 상태 설정
       } catch (error) {
         console.error("Error fetching golf course data:", error); // 데이터 가져오기 오류 처리
       }
@@ -154,7 +165,7 @@ function Map() {
               key={index}
               className="search-result-item"
               onClick={(e) => {
-                e.preventDefault();
+                // e.preventDefault();
                 setArea(result.location); // 클릭한 결과의 위치를 설정
                 console.log(result.location); // 디버깅용 콘솔 출력
               }}
@@ -162,6 +173,12 @@ function Map() {
             >
               <strong>{result.name}</strong> - {result.location}{" "}
               {/* 검색 결과 */}
+              <button
+                className="reserve-button"
+                onClick={() => handleReservationClick(result)}
+              >
+                예약하기
+              </button>
             </div>
           ))}
         </div>
