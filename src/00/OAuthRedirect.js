@@ -6,6 +6,7 @@ function OAuthRedirect({ setLoggedIn }) {
 
   useEffect(() => {
     const handleOAuthResponse = () => {
+
       const urlParams = new URLSearchParams(window.location.search);
 
       // 기존 코드: 토큰과 회원 정보 파라미터 가져오기
@@ -22,9 +23,10 @@ function OAuthRedirect({ setLoggedIn }) {
         // 로컬 스토리지에 JWT 토큰 저장
         localStorage.setItem("authToken", jwtToken);
         localStorage.setItem("member_id", memberId || "");
-        localStorage.setItem("loggedIn", "true");
 
+        localStorage.setItem("loggedIn", "true");
         setLoggedIn(true);
+
 
         if (isSignUp || isNewUser === "true") {
           // 신규 사용자: 추가 정보 입력 단계로 이동

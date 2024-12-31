@@ -105,7 +105,9 @@ const Reserve = () => {
       alert("검색된 결과가 없습니다.");
     }
 
+
     setSearchTerm("");
+
   };
 
   const handleKeyPress = (e) => {
@@ -130,6 +132,7 @@ const Reserve = () => {
     autoplay: false,
   };
 
+
   const toLocalDateString = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -139,14 +142,17 @@ const Reserve = () => {
 
   const makeReservation = async () => {
     try {
-      const memberId = localStorage.getItem("username");
+
+      const username = localStorage.getItem("username");
       const localDateString = toLocalDateString(selectedDate);
       const response = await axios.post(
         "http://10.125.121.226:8080/reservations",
         {
           courseId: selectedCourse.courseId,
-          memberId: memberId,
-          reservationDate: localDateString,
+
+          username: username,
+          reservationDate: localDateString, // 날짜를 ISO 형식으로
+
           reservationTime: selectedTime,
         }
       );
@@ -194,18 +200,24 @@ const Reserve = () => {
         ))}
       </div>
 
+
       {selectedCourse && (
         <div className="back-to-list">
           <button
             onClick={() => {
-              setSelectedCourse(null);
-              setFilteredCourses(golfCourses);
+
+              setSelectedCourse(null); // 선택된 골프장 초기화
+              setFilteredCourses(golfCourses); // 전체 리스트 복원
+
             }}
           >
             전체 리스트로 돌아가기
           </button>
         </div>
       )}
+
+
+      {/* 사진 캐러셀 */}
 
       {selectedCourse && (
         <div className="carousel-container">

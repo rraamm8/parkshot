@@ -1,5 +1,7 @@
 package com.parkshot.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.parkshot.controller.dto.ReservationRequestDto;
@@ -38,13 +40,13 @@ public class ReservationService {
         // 골프장 및 회원 정보 가져오기
         Golfcourse golfCourse = golfCourseRepo.findById(requestDto.getCourseId())
             .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 골프장 ID입니다."));
-//        Member member = memberRepo.findByUsername(requestDto.getUsername())
-//            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 회원 ID입니다."));
+        Member member = memberRepo.findByUsername(requestDto.getUsername())
+        		.orElseThrow(() -> new IllegalArgumentException("유효하지 않은 멤버 ID입니다."));
 
         // 예약 생성
         Reservation reservation = Reservation.builder()
             .courseId(golfCourse)
-            .memberId("123@123")
+            .username(member)
             .reservationDate(requestDto.getReservationDate())
             .reservationTime(requestDto.getReservationTime())
             .status(Reservation.Status.CONFIRMED)
@@ -61,4 +63,13 @@ public class ReservationService {
             .status(savedReservation.getStatus().toString())
             .build();
     }
+
+	public List<Reservation> getReservationsByUsername(Member username) {
+
+		return reservationRepo.getReservationsByUsername(username);
+	}
+	
+	public List<Reservation> getReservations(){
+		return reservationRepo.findAll();
+	}
 }
