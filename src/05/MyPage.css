@@ -78,3 +78,8 @@
 .delete-button:hover {
   background-color: #831a1f; /* 어두운 빨간색 */
 }
+
+.mypage-calendar {
+  width: 60%;
+  margin: 30px;
+}
