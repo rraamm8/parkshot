@@ -98,7 +98,8 @@ function Score() {
   // };
 
   return (
-    <main>
+    <main className="score-main">
+      <h1>스코어보드</h1>
       {/* 검색 필드와 버튼 */}
       <div className="search-container">
         <input

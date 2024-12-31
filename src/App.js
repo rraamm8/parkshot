@@ -104,7 +104,7 @@ function App() {
   return (
     <BrowserRouter>
       {/* 전체 레이아웃 */}
-      <div className="w-full xl:w-10/12 h-screen mx-auto
+      <div className="w-full h-screen mx-auto
                       flex flex-col justify-center items-center">
         <header className="header">
           {/* NavBar에 로그인 상태 전달 */}
@@ -137,9 +137,7 @@ function App() {
           </Routes>
         </main>
 
-        <footer className="w-full h-20 flex-shrink-0
-                           flex justify-center items-center
-                           bg-black text-white">
+        <footer>
           <p>K-digital 8기 미니프로젝트</p>
         </footer>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./SignUp.css"; // 스타일 파일 불러오기
+import "./SignUp.css";
 
 function SignUp1() {
   const handleOAuthSignUp = (provider) => {
@@ -21,19 +21,19 @@ function SignUp1() {
           className="signup-btn naver"
           onClick={() => handleOAuthSignUp("naver")}
         >
-          네이버로 회원가입 →
+          네이버로 회원 연동 →
         </button>
         <button
           className="signup-btn kakao"
           onClick={() => handleOAuthSignUp("kakao")}
         >
-          카카오로 회원가입 →
+          카카오로 회원 연동 →
         </button>
         <button
           className="signup-btn google"
           onClick={() => handleOAuthSignUp("google")}
         >
-          구글로 회원가입 →
+          구글로 회원 연동 →
         </button>
       </div>
     </div>

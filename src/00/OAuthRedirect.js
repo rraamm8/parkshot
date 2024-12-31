@@ -9,29 +9,27 @@ function OAuthRedirect({ setLoggedIn }) {
 
       const urlParams = new URLSearchParams(window.location.search);
 
-      // 기존 코드: 토큰과 회원 정보 파라미터 가져오기
-      const token = urlParams.get("token"); // 서버에서 전달된 토큰
-      const memberId = urlParams.get("memberId"); // 사용자 ID
-      const isNewUser = urlParams.get("isNewUser"); // 신규 사용자 여부
+      // 서버에서 전달된 URL 파라미터 추출
+      const authToken = urlParams.get("authToken"); // JWT 토큰
+      const memberId = urlParams.get("username"); // 사용자 ID
       const isSignUp = urlParams.get("signup") === "true"; // 회원가입 여부 확인
 
       // **수정된 부분: Authorization 헤더 파라미터 지원**
-      const authHeader = urlParams.get("Authorization"); // URL에 포함된 Authorization 헤더 가져오기
-      const jwtToken = authHeader?.replace("Bearer ", "").trim() || token;
+      // const authHeader = urlParams.get("Authorization"); // URL에 포함된 Authorization 헤더 가져오기
+      // const jwtToken = authHeader?.replace("Bearer ", "").trim() || token;
 
-      if (jwtToken) {
-        // 로컬 스토리지에 JWT 토큰 저장
-        localStorage.setItem("authToken", jwtToken);
-        localStorage.setItem("member_id", memberId || "");
-
+      if (authToken) {
+        // 로컬 스토리지에 토큰 및 사용자 정보 저장
+        localStorage.setItem("authToken", authToken);
+        localStorage.setItem("username", memberId || "");
         localStorage.setItem("loggedIn", "true");
+
         setLoggedIn(true);
 
+        if (isSignUp) {
+          // 회원가입 후 처리
+          alert("회원가입이 완료되었습니다! 환영합니다.");
 
-        if (isSignUp || isNewUser === "true") {
-          // 신규 사용자: 추가 정보 입력 단계로 이동
-          alert("추가 정보가 필요합니다.");
-          navigate("/signup3"); // SignUp3로 이동
         } else {
           // 기존 사용자: 회원 페이지로 이동
           alert("로그인 성공!");

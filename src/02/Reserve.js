@@ -22,6 +22,14 @@ const Reserve = () => {
   const { courseId } = useParams(); // URL에서 courseId 가져오기
   const selectedCourseFromMap = location.state?.course; // Map.js에서 전달된 골프장 데이터
 
+  const handleBackToList = () => {
+    navigate("/reserve", { replace: true });
+    setSelectedCourse(null); // 상태 초기화
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setFilteredCourses(golfCourses); // 전체 리스트 복원
+  };
+  
   // API에서 구장 데이터 가져오기
   useEffect(() => {
     const fetchCourses = async () => {
@@ -142,7 +150,6 @@ const Reserve = () => {
 
   const makeReservation = async () => {
     try {
-
       const username = localStorage.getItem("username");
       const localDateString = toLocalDateString(selectedDate);
       const response = await axios.post(
@@ -151,8 +158,7 @@ const Reserve = () => {
           courseId: selectedCourse.courseId,
 
           username: username,
-          reservationDate: localDateString, // 날짜를 ISO 형식으로
-
+          reservationDate: localDateString,
           reservationTime: selectedTime,
         }
       );
@@ -200,17 +206,11 @@ const Reserve = () => {
         ))}
       </div>
 
-
+      {/* 선택된 코스가 있을 때만 버튼 표시 */}  
       {selectedCourse && (
         <div className="back-to-list">
           <button
-            onClick={() => {
-
-              setSelectedCourse(null); // 선택된 골프장 초기화
-              setFilteredCourses(golfCourses); // 전체 리스트 복원
-
-            }}
-          >
+            onClick={handleBackToList}>
             전체 리스트로 돌아가기
           </button>
         </div>

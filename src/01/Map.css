@@ -10,6 +10,13 @@
   z-index: 1; /* NavBar 아래에 위치 */
 }
 
+.search-title h1 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 /* 검색 영역 스타일 */
 .search-container {
   display: flex;
