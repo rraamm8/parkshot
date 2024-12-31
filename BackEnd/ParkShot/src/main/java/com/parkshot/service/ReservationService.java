@@ -72,4 +72,13 @@ public class ReservationService {
 	public List<Reservation> getReservations(){
 		return reservationRepo.findAll();
 	}
+	
+    public void deleteReservation(Long id) {
+        if (!reservationRepo.existsById(id)) {
+            throw new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + id);
+        }
+        reservationRepo.deleteById(id);
+    }
+    
+    
 }
