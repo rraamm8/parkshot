@@ -15,7 +15,6 @@ const Reserve = () => {
   const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜
   const [selectedTime, setSelectedTime] = useState(null); // 선택된 시간
   const [timeSlots, setTimeSlots] = useState([]); // 선택 가능한 시간대
-  const [username, setUsername] = useState("");
 
   // API에서 구장 데이터 가져오기
   useEffect(() => {
@@ -51,13 +50,6 @@ const Reserve = () => {
       setSelectedTime(null); // 시간 선택 초기화
     }
   }, [selectedCourse, selectedDate]);
-
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    setUsername(storedUsername);
-
-    console.log("Stored values from localStorage:", { storedUsername }); // 디버깅
-  }, []);
 
   // 검색 실행 함수
   const handleSearch = () => {
@@ -162,6 +154,7 @@ const Reserve = () => {
 
   const makeReservation = async () => {
     try {
+      const username = localStorage.getItem("username");
       const localDateString = toLocalDateString(selectedDate);
       const response = await axios.post(
         "http://10.125.121.226:8080/reservations",
