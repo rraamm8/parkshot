@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import "./MyPage.css";
 
 function MyPage() {
+
   const [userInfo, setUserInfo] = useState({ email: "" });
+
   const [reservations, setReservations] = useState([]); // 예약 목록
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
+
 
     console.log("Stored values from localStorage:", { storedUsername }); // 디버깅
 
@@ -33,15 +36,16 @@ function MyPage() {
   }, []);
 
   console.log("Rendering userInfo:", userInfo); // 렌더링 중 상태 확인
-
-
+  
   return (
     <div className="mypage-container">
       <h1 className="mypage-title">마이페이지</h1>
 
       {/* 사용자 정보 표시 */}
       <div className="mypage-info">
+
         <p><strong>이메일:</strong> {userInfo.email}</p>
+
         <button
           className="mypage-password-button"
           onClick={() => navigate("/change-password")}
@@ -82,3 +86,4 @@ function MyPage() {
 }
 
 export default MyPage;
+

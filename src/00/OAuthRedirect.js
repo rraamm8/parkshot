@@ -6,6 +6,7 @@ function OAuthRedirect({ setLoggedIn }) {
 
   useEffect(() => {
     const handleOAuthResponse = () => {
+
       const urlParams = new URLSearchParams(window.location.search);
 
       // 서버에서 전달된 URL 파라미터 추출
@@ -28,6 +29,7 @@ function OAuthRedirect({ setLoggedIn }) {
         if (isSignUp) {
           // 회원가입 후 처리
           alert("회원가입이 완료되었습니다! 환영합니다.");
+
         } else {
           // 기존 사용자: 회원 페이지로 이동
           alert("로그인 성공!");

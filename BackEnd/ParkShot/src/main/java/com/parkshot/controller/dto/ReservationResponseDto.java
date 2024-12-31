@@ -10,7 +10,7 @@ import java.time.LocalTime;
 public class ReservationResponseDto {
     private Long reservationId;
     private String courseName;
-    private String memberId;
+    private String username;
     private LocalDate reservationDate;
     private LocalTime reservationTime;
     private String status;

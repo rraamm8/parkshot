@@ -26,6 +26,7 @@ function Map() {
     if (query && isDataLoaded) {
       setSearchInput(query); // 검색어를 상태에 저장
       handleSearch(query); // 데이터 로드 이후 검색 실행
+
     }
   }, [searchParams, isDataLoaded]); // 의존성: 검색 파라미터와 데이터 로드 상태
 
@@ -64,6 +65,7 @@ function Map() {
   // 예약 버튼 클릭 시 실행 함수
   const handleReservationClick = (course) => {
     navigate(`/reserve/${course.courseId}`); // URL에 courseId 추가해서 전달
+
   };
 
   // 주소를 지오코딩
