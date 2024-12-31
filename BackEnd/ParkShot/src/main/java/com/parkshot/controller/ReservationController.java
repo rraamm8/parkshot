@@ -15,6 +15,8 @@ import com.parkshot.domain.Reservation;
 import com.parkshot.service.ReservationService;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,5 +51,10 @@ public class ReservationController {
     public List<Reservation> getReservations(){
     	return reservationService.getReservations();
     }
+    
+ 	@DeleteMapping("/{id}")
+ 	public void deleteReservation(@PathVariable Long id) {
+ 		reservationService.deleteReservation(id);
+ 	}
     
 }
