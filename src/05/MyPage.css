@@ -1,60 +1,66 @@
 .mypage-container {
-    width: 50%;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-  }
-  
-  .mypage-title {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .mypage-info {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .mypage-info p {
-    font-size: 16px;
-    margin: 5px 0;
-  }
-  
-  .mypage-password-button {
-    background-color: #3b82f6;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .mypage-password-button:hover {
-    background-color: #2263ca;
-  }
-  
-  .mypage-reservations {
-    margin-top: 20px;
-  }
-  
-  .mypage-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  .mypage-table th,
-  .mypage-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .mypage-table th {
-    background-color: #f8f9fa;
-  }
-  
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  overflow-y: auto;
+}
+
+.mypage-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.mypage-info {
+  width: 60%;
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.mypage-info p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.mypage-password-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mypage-password-button:hover {
+  background-color: #2263ca;
+}
+
+.mypage-reservations {
+  width: 60%;
+  margin-top: 20px;
+}
+
+.mypage-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.mypage-table th,
+.mypage-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.mypage-table th {
+  background-color: #f8f9fa;
+}

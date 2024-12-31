@@ -9,7 +9,7 @@ html, body {
 .main-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: calc(100vh - 100px); /* 헤더 제외한 높이 */
+  height: 100%;
   align-items: start;
   padding: 50px;
 }
@@ -24,6 +24,7 @@ html, body {
   font-size: 3rem;
   font-weight: bold;
   line-height: 1.4;
+  text-align: left;
 }
 
 .subtitle {
