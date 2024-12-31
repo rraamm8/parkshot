@@ -6,7 +6,6 @@ import "./App.css";
 import Home from "./00/Home";
 import SignUp1 from "./00/SignUp1";
 import SignUp2 from "./00/SignUp2";
-import SignUp3 from "./00/SignUp3";
 import SignUpSuccess from "./00/SignUpSuccess";
 import LoginInput from "./00/LoginInput";
 import Login from "./00/Login";
@@ -118,7 +117,6 @@ function App() {
             <Route path="/member" element={<Home />} />
             <Route path="/signup1" element={<SignUp1 />} />
             <Route path="/signup2" element={<SignUp2 />} />
-            <Route path="/signup3" element={<SignUp3 />} />
             <Route path="/signup-success" element={<SignUpSuccess />} />
             <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path="/login-input" element={<LoginInput setLoggedIn={setLoggedIn} />} />

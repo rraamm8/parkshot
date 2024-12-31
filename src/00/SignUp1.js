@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 import "./SignUp.css";
 
 function SignUp1() {
-  const handleOAuthSignUp = (provider) => {
-    const oauthUrl = `http://local:8080/oauth2/authorization/${provider}`;
-    window.location.href = oauthUrl; // OAuth 인증 URL로 이동
+  const handleOAuthSignUp = async (provider) => {
+    try {
+      const oauthUrl = `http://10.125.121.226:8080/oauth2/authorization/${provider}`;
+      // OAuth 인증 URL로 이동
+      window.location.href = oauthUrl;
+    } catch (error) {
+      // 오류 발생 시
+      console.error("OAuth 회원가입 오류:", error);
+      alert("회원 연동 중 오류가 발생했습니다. 다시 시도해주세요.");
+      window.location.href = "/signup1";
+    }
   };
 
   return (

@@ -50,31 +50,43 @@ function Score() {
     fetchHoles();
   }, [courseId]); // courseId 변경 시 데이터 fetch
 
-  const handleSearch = async () => {
-    if (!searchInput.trim()) {
-      alert("검색어를 입력해주세요.");
-      return;
-    }
-    // 검색어 정규화
-    const normalizedSearchInput = searchInput.trim().toLowerCase();
-
-    // 검색 결과 필터링
-    const filteredCourses = golfCourses.filter((course) => {
-      const normalizedName = course.name.toLowerCase();
-      const normalizedLocation = course.location.toLowerCase();
-
+  const handleSearch = () => {
+    const normalizedSearchInput = searchInput.trim();
+  
+    const results = golfCourses.filter((course) => {
+      const normalizedName = course.name.trim();
+      const normalizedLocation = course.location.trim();
+      const normalizedRegion = course.region?.trim() || ""; // region이 없을 수도 있으므로 기본값 추가
+  
+      const isLocationMatch =
+        normalizedLocation.includes(normalizedSearchInput) ||
+        normalizedLocation.startsWith(normalizedSearchInput);
+  
+      const isRegionMatch =
+        normalizedRegion.includes(normalizedSearchInput) ||
+        normalizedRegion.startsWith(normalizedSearchInput);
+  
       return (
         normalizedName.includes(normalizedSearchInput) ||
-        normalizedLocation.includes(normalizedSearchInput)
+        isLocationMatch ||
+        isRegionMatch
       );
     });
+  
+    setHoles([]);
 
-    // 검색 결과 업데이트
-    setSearchResults(filteredCourses);
-
-    if (filteredCourses.length === 0) {
+    setSearchResults(results);
+    setFilteredCourses(results);
+  
+    if (results.length === 0) {
       alert("검색된 결과가 없습니다.");
-      return;
+    }
+  };
+
+  // 엔터키 이벤트 핸들러 추가
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
     }
   };
 
@@ -107,6 +119,7 @@ function Score() {
           placeholder="골프장 이름 또는 주소를 입력하세요"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
+          onKeyDown={handleKeyPress}
           className="search-input"
         />
         <button onClick={handleSearch} className="search-button">
@@ -115,7 +128,7 @@ function Score() {
       </div>
 
       {/* 검색 결과 표시 */}
-      <div className="search-results">
+      <div className={`score-search-results ${searchResults.length > 0 ? "visible" : ""}`}>
         {searchResults.map((result, index) => (
           <div
             key={index}
@@ -124,7 +137,7 @@ function Score() {
               e.preventDefault();
               setCourseId(result.courseId);
               console.log(result.courseId);
-            }} // 클릭 시 Geocoding
+            }}
             style={{ cursor: "pointer" }}
           >
             <strong>{result.name}</strong> - {result.location}

@@ -149,7 +149,7 @@ function SignUp2() {
             onChange={(e) => setUsername(e.target.value)}
           />
           <button type="button" className="confirm-btn" onClick={handleCheckEmail}>
-            중복확인
+            중복 확인
           </button>
         </div>
 
@@ -190,7 +190,7 @@ function SignUp2() {
             className="confirm-btn"
             onClick={handleCheckNickname}
           >
-            중복확인
+            중복 확인
           </button>
           {nicknameError && <p className="error-message">{nicknameError}</p>}
         </div>

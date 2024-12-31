@@ -97,7 +97,7 @@
 
 /* 중복확인 버튼 스타일 */
 .confirm-btn {
-  padding: 10px 15px;
+  padding: 10px 20px;
   font-size: 1rem;
   background-color: #4285f4; /* 파란색 */
   color: #fff;
@@ -133,6 +133,6 @@
 .error-message {
   margin-left: 5px;
   color: red;
-  font-size: 12px;
+  font-size: 9px;
   margin-top: 5px;
 }
