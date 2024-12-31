@@ -43,7 +43,7 @@ public class SecurityConfig {
 		
 		// 기본 로그인 페이지 설정
 		http.formLogin(form -> form.loginPage("/login")
-				.defaultSuccessUrl("/loginSuccess", true));
+				.defaultSuccessUrl("/member", true));
 		
 		// HTTP 기본 인증 비활성화
 		http.httpBasic(basic -> basic.disable());

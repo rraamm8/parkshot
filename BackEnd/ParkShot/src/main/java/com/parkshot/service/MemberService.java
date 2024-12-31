@@ -36,7 +36,7 @@ public class MemberService {
 
     
     public Member findByUsername(String username) {
-        return memberRepo.findById(username)
+        return memberRepo.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 

@@ -113,7 +113,9 @@ const Reserve = () => {
       alert("검색된 결과가 없습니다.");
     }
 
+
     setSearchTerm("");
+
   };
 
   const handleKeyPress = (e) => {
@@ -138,6 +140,7 @@ const Reserve = () => {
     autoplay: false,
   };
 
+
   const toLocalDateString = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -153,6 +156,7 @@ const Reserve = () => {
         "http://10.125.121.226:8080/reservations",
         {
           courseId: selectedCourse.courseId,
+
           username: username,
           reservationDate: localDateString,
           reservationTime: selectedTime,
@@ -211,6 +215,9 @@ const Reserve = () => {
           </button>
         </div>
       )}
+
+
+      {/* 사진 캐러셀 */}
 
       {selectedCourse && (
         <div className="carousel-container">
