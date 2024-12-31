@@ -34,6 +34,7 @@ main {
   display: flex; /* Flexbox 레이아웃 추가 */
   flex-direction: column;
   align-items: center; /* 중앙 정렬 */
+  overflow-y: auto;
 }
 
 /* NavBar 스타일 */

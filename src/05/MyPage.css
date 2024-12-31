@@ -64,3 +64,17 @@
 .mypage-table th {
   background-color: #f8f9fa;
 }
+
+.delete-button {
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #db2929; /* 빨간색 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #831a1f; /* 어두운 빨간색 */
+}

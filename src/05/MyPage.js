@@ -32,6 +32,26 @@ function MyPage() {
       .catch((error) => console.error("Error fetching reservations:", error));
   }, []);
 
+  const handleDelete = (reservationId) => {
+    fetch(`http://10.125.121.226:8080/reservations/${reservationId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setReservations((prevReservations) =>
+            prevReservations.filter((reservation) => reservation.reservationId !== reservationId)
+          );
+          alert("예약이 삭제되었습니다.");
+        } else {
+          alert("예약 삭제에 실패했습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting reservation:", error);
+        alert("예약 삭제 중 오류가 발생했습니다.");
+      });
+  };
+
   console.log("Rendering userInfo:", userInfo); // 렌더링 중 상태 확인
 
 
@@ -62,6 +82,7 @@ function MyPage() {
                 <th>골프장 이름</th>
                 <th>날짜</th>
                 <th>시간</th>
+                <th>삭제</th>
               </tr>
             </thead>
             <tbody>
@@ -71,6 +92,14 @@ function MyPage() {
                   <td>{reservation.courseId.name}</td>
                   <td>{reservation.reservationDate}</td>
                   <td>{reservation.reservationTime}</td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(reservation.reservationId)}
+                    >
+                      삭제
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
