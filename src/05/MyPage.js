@@ -76,7 +76,7 @@ function MyPage() {
 
   return (
     <div className="mypage-container">
-      <h1 className="mypage-title">마이페이지</h1>
+      <h1 className="mypage-title p-4">마이페이지</h1>
 
       {/* 사용자 정보 표시 */}
       <div className="mypage-info">
@@ -91,7 +91,7 @@ function MyPage() {
 
       {/* 기존 예약 내역 테이블 */}
       <div className="mypage-reservations">
-        <h2>내 골프장 예약 목록</h2>
+        <h2 className="text-xl p-3 font-bold">내 골프장 예약 목록</h2>
         {reservations.length === 0 ? (
           <p>예약된 내역이 없습니다.</p>
         ) : (
@@ -129,7 +129,7 @@ function MyPage() {
 
       {/* BigCalendar 추가 */}
       <div className="mypage-calendar">
-        <h2>예약 캘린더</h2>
+        <h2 className="text-xl p-4 font-bold">예약 내역 캘린더</h2>
         <BigCalendar
           localizer={localizer}
           events={events}

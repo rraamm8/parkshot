@@ -137,7 +137,7 @@ function Map() {
   return (
     <NavermapsProvider>
       <div className="search-title">
-        <h1>코스찾기</h1>
+        <h1 className="p-4">코스찾기</h1>
       </div>
       <MapDiv className="map-wrapper">
         <MyMap area={area} markers={markers} /> {/* MyMap 컴포넌트 렌더링 */}

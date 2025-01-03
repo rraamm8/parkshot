@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -21,6 +21,10 @@ const Reserve = () => {
   const location = useLocation();
   const { courseId } = useParams(); // URL에서 courseId 가져오기
   const selectedCourseFromMap = location.state?.course; // Map.js에서 전달된 골프장 데이터
+
+  //스크롤 위치를 참조할 useRef 추가
+  const timePickerRef = useRef(null); // 시간 선택 섹션
+  const confirmButtonRef = useRef(null); // 예약 버튼 섹션
 
   const handleBackToList = () => {
     navigate("/reserve", { replace: true });
@@ -84,6 +88,20 @@ const Reserve = () => {
     }
   }, [selectedCourseFromMap]);
 
+  //스크롤 동작 제어 로직
+  useEffect(() => {
+    if (selectedCourse) {
+      if (selectedDate && timePickerRef.current) {
+        // 날짜 선택 시 시간 선택 섹션으로 스크롤
+        timePickerRef.current.scrollIntoView({ behavior: "smooth" });
+      } else if (selectedTime && confirmButtonRef.current) {
+        // 시간 선택 시 예약 버튼 섹션으로 스크롤
+        confirmButtonRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [selectedDate, selectedTime, selectedCourse]); // selectedDate, selectedTime 변경 시 동작
+
+  
   // 검색 실행 함수
   const handleSearch = () => {
     const normalizedSearchTerm = searchTerm.trim();
@@ -113,7 +131,6 @@ const Reserve = () => {
       alert("검색된 결과가 없습니다.");
     }
 
-
     setSearchTerm("");
 
   };
@@ -139,7 +156,6 @@ const Reserve = () => {
     arrows: true,
     autoplay: false,
   };
-
 
   const toLocalDateString = (date) => {
     const year = date.getFullYear();
@@ -171,7 +187,7 @@ const Reserve = () => {
 
   return (
     <div className="reserve-container">
-      <h1>골프장 예약하기</h1>
+      <h1 className="p-4">골프장 예약하기</h1>
 
       <div className="search-courses">
         <div className="search-input-container">
@@ -216,7 +232,6 @@ const Reserve = () => {
         </div>
       )}
 
-
       {/* 사진 캐러셀 */}
 
       {selectedCourse && (
@@ -244,7 +259,7 @@ const Reserve = () => {
       )}
 
       {selectedDate && (
-        <div className="time-picker">
+        <div className="time-picker" ref={timePickerRef}>
           <h2>시간 선택</h2>
           <ul className="time-slot-list">
             {timeSlots.map((time, index) => (
@@ -261,7 +276,7 @@ const Reserve = () => {
       )}
 
       {selectedTime && (
-        <div className="confirm-reservation">
+        <div className="confirm-reservation" ref={confirmButtonRef}>
           <button onClick={makeReservation}>예약하기</button>
         </div>
       )}

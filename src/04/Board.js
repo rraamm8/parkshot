@@ -31,7 +31,7 @@ function Board() {
 
   return (
     <div className="board-container">
-      <h1 className="board-title">커뮤니티</h1>
+      <h1 className="board-title p-4">커뮤니티</h1>
       <div className="board-search">
         <input
           type="text"
