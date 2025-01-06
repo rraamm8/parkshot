@@ -58,7 +58,7 @@ function BoardView() {
 
   return (
     <div className="board-container">
-      <h1 className="board-title">게시글 보기</h1>
+      <h1 className="board-title p-4">게시글 보기</h1>
       <div className="board-view-content">
         <h2 className="text-2xl font-bold mb-4">{post.title}</h2>
         <div className="board-view-info">

@@ -31,14 +31,8 @@ function Board() {
 
   return (
     <div className="board-container">
-      <h1 className="board-title">커뮤니티</h1>
+      <h1 className="board-title p-4">커뮤니티</h1>
       <div className="board-search">
-        <input
-          type="text"
-          placeholder="검색어를 입력해주세요."
-          className="board-search-input"
-        />
-        <button className="board-search-button">검색</button>
         {/* 글쓰기 버튼 */}
         <button
           className="board-write-button"

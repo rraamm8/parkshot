@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
+import { format, parse, startOfWeek, getDay } from "date-fns";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./MyPage.css";
+
+const locales = {
+  "en-US": require("date-fns/locale/en-US"),
+};
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+});
 
 function MyPage() {
   const [userInfo, setUserInfo] = useState({ email: "" });
   const [reservations, setReservations] = useState([]); // 예약 목록
-  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
-
-    console.log("Stored values from localStorage:", { storedUsername }); // 디버깅
 
     if (storedUsername) {
       setUserInfo({
@@ -20,7 +30,7 @@ function MyPage() {
   }, []);
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username"); // 예약 목록에서 username 가져오기
+    const storedUsername = localStorage.getItem("username");
     if (!storedUsername) {
       console.error("Username is null or undefined for reservations.");
       return;
@@ -65,28 +75,27 @@ function MyPage() {
       });
   };
 
-  console.log("Rendering userInfo:", userInfo); // 렌더링 중 상태 확인
+  // 예약 데이터를 react-big-calendar 형식으로 변환
+  const events = reservations.map((reservation) => ({
+    title: reservation.courseId.name,
+    start: new Date(reservation.reservationDate + "T" + reservation.reservationTime),
+    end: new Date(reservation.reservationDate + "T" + reservation.reservationTime),
+    id: reservation.reservationId,
+    reservationTime: reservation.reservationTime, // 예약 시간 추가
+  }));
 
   return (
     <div className="mypage-container">
-      <h1 className="mypage-title">마이페이지</h1>
+      <h1 className="mypage-title p-4">마이페이지</h1>
 
       {/* 사용자 정보 표시 */}
       <div className="mypage-info">
-        <p>
-          <strong>이메일:</strong> {userInfo.email}
-        </p>
-
-        <button
-          className="mypage-password-button"
-          onClick={() => navigate("/change-password")}
-        >
-          비밀번호 변경
-        </button>
+        <p><strong>이메일:</strong> {userInfo.email}</p>
       </div>
 
+      {/* 기존 예약 내역 테이블 */}
       <div className="mypage-reservations">
-        <h2>내 골프장 예약 목록</h2>
+        <h2 className="text-xl p-3 font-bold">내 골프장 예약 목록</h2>
         {reservations.length === 0 ? (
           <p>예약된 내역이 없습니다.</p>
         ) : (
@@ -120,6 +129,19 @@ function MyPage() {
             </tbody>
           </table>
         )}
+      </div>
+
+      {/* BigCalendar 추가 */}
+      <div className="mypage-calendar">
+        <h2 className="text-xl p-4 font-bold">예약 내역 캘린더</h2>
+        <BigCalendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500 }}
+          onSelectEvent={(event) => alert(`예약 상세: ${event.title}\n시간: ${event.reservationTime}`)}
+        />
       </div>
     </div>
   );
