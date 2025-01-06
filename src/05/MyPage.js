@@ -21,6 +21,7 @@ function MyPage() {
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
+
     if (storedUsername) {
       setUserInfo({
         email: storedUsername || "이메일 없음",

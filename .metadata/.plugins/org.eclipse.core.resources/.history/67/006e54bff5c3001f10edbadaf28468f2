@@ -1,9 +1,0 @@
-package com.parkshot.persistence;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.parkshot.domain.Hole;
-
-public interface HoleRepository extends JpaRepository<Hole, Integer> {
-
-}

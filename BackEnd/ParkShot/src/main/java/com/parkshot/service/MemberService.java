@@ -1,7 +1,5 @@
 package com.parkshot.service;
 
-import java.util.Optional;
-
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,44 +31,9 @@ public class MemberService {
         memberRepo.save(memberRegi);
     }
 
-
-    
     public Member findByUsername(String username) {
         return memberRepo.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
-    public boolean validateLogin(String username, String password) {
-        // 이메일로 멤버 조회
-        Optional<Member> optionalMember = memberRepo.findById(username);
-    	
-    	
-        // 멤버가 존재하고 비밀번호가 일치하면 true 반환
-        if (optionalMember.isPresent()) {
-            Member member = optionalMember.get();
-            return member.getPassword().equals(password);
-        }
-
-        // 멤버가 존재하지 않거나 비밀번호가 틀리면 false 반환
-        return false;
-    }
-    // 비밀번호 암호화
-//    	member.setUsername(member.getUsername());
-//        member.setPassword(passwordEncoder.encode(member.getPassword()));
-//        member.setRole(Role.ROLE_MEMBER);
-//        member.setEnabled(true);
-//        member.setNickname(member.getNickname());
-//        // Member 객체 생성 및 저장
-//        Member memberRegi = Member.builder()
-//            .member_id(member.getMember_id())
-//            .password(encodedPassword)
-//            .nickname(member.getNickname())
-//            .role(Role.ROLE_MEMBER)
-//            .enabled(true)
-//            .build();
-//        
-    // 이메일(PK)이 중복되면 예외 처리
-//        if (memberRepo.existsById(member.getMember_id())) {
-//            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
-//        }
 }

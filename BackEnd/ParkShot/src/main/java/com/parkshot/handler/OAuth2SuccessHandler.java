@@ -48,7 +48,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 		String name = (String) user.getAttributes().get("name");
 	    if (name == null || name.isEmpty()) {
 	        log.warn("onAuthenticationSuccess: 'name' attribute is missing, defaulting to '아무개'.");
-	        name = "아무개"; // 기본값 설정
+	        name = username; // 기본값 설정
 	    }
 		
 		memberRepo.save(Member.builder()
@@ -60,8 +60,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 				.build());
 		
 		String jwtToken = JWTUtil.getJWT(username);
-	    String redirectUrl = String.format("http://localhost:3000/oauth2/redirect?Authorization=Bearer%%20%s", jwtToken);
-	    getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+		String redirectUrl = String.format("http://localhost:3000/oauth2/redirect?authToken=%s", jwtToken);
+		getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+
 	}
 
 }

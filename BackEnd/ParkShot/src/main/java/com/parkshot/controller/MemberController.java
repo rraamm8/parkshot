@@ -1,15 +1,12 @@
 package com.parkshot.controller;
 
-
-
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +28,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/member")
 @CrossOrigin(origins = "http://localhost:3000")
 public class MemberController {
-	
+
 	@Autowired
-	private MemberService memberService; // MemberService 주입
-	
+	private MemberService memberService;
+
 	@Autowired
 	private MemberRepository memberRepo;
 
@@ -43,65 +40,22 @@ public class MemberController {
 		memberService.registerMember(member);
 		return ResponseEntity.ok("회원가입 성공");
 	}
-	
+
 	@GetMapping("/checkUsername")
-    public ResponseEntity<?> checkUsername(@RequestParam String username) {
-        boolean exists = memberRepo.existsByUsername(username);
-        return ResponseEntity.ok(Map.of("available", !exists));
-    }
-
-    @GetMapping("/checkNickname")
-    public ResponseEntity<?> checkNickname(@RequestParam String nickname) {
-        boolean exists = memberRepo.existsByNickname(nickname);
-        return ResponseEntity.ok(Map.of("available", !exists));
-    }
-    
-    @GetMapping("/{username}")
-    public Optional<Member> findByUsername(@PathVariable String username) {
-        return memberRepo.findByUsername(username);
-    }
-	
-
-	@PostMapping("/auth")
-	public @ResponseBody ResponseEntity<?> auth(@AuthenticationPrincipal User user) {
-		if (user == null) {
-			return ResponseEntity.ok("로그인 상태가 아닙니다.");
-		}
-		return ResponseEntity.ok(user);
+	public ResponseEntity<?> checkUsername(@RequestParam String username) {
+		boolean exists = memberRepo.existsByUsername(username);
+		return ResponseEntity.ok(Map.of("available", !exists));
 	}
-//	@PostMapping("/login")
-//	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-//		boolean isValid = memberService.validateLogin(request.getMember_id(), request.getPassword());
-//
-//		if (isValid) {
-//			// 유저 정보 및 권한 가져오기
-//			UserDetails userDetails = securityUserDetailsService.loadUserByUsername(request.getMember_id());
-//			String username = userDetails.getUsername();
-//			String role = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).findFirst()
-//					.orElse("ROLE_MEMBER"); // 기본값 설정
-//
-//			// JSON 응답 생성
-//			return ResponseEntity.ok(new LoginResponse(username, role));
-//		}
-//
-//		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//	}
-//
-//	@GetMapping("/oauth")
-//	public @ResponseBody String auth(@AuthenticationPrincipal OAuth2User user) {
-//		if (user == null)
-//			return "OAuth2:null";
-//
-//		System.out.println("attributes : " + user.getAttributes());
-//
-//		return "OAuth2 : " + user;
-//	}
-	
-//	@PostMapping("/join")
-//    public @ResponseBody Member join(Member member) {
-//        member.setRole("M");
-//        member.setPassword(BCryptPasswordEncoder.encode(member.getPassword()));
-//
-//        return saveUser;
-//    }
+
+	@GetMapping("/checkNickname")
+	public ResponseEntity<?> checkNickname(@RequestParam String nickname) {
+		boolean exists = memberRepo.existsByNickname(nickname);
+		return ResponseEntity.ok(Map.of("available", !exists));
+	}
+
+	@GetMapping("/{username}")
+	public Optional<Member> findByUsername(@PathVariable String username) {
+		return memberRepo.findByUsername(username);
+	}
+
 }

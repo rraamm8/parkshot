@@ -30,4 +30,7 @@
     <fullyQualifiedTypeName name="java.lang.reflect.Member"/>
     <fullyQualifiedTypeName name="com.parkshot.domain.Member"/>
     <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="org.springframework.web.cors.CorsConfiguration"/>
+    <fullyQualifiedTypeName name="org.springframework.web.cors.UrlBasedCorsConfigurationSource"/>
+    <fullyQualifiedTypeName name="org.springframework.web.cors.CorsConfigurationSource"/>
 </qualifiedTypeNameHistroy>
