@@ -1,7 +1,5 @@
 package com.parkshot.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,18 +30,18 @@ public class BoardController {
 	@Autowired
 	private MemberService memberService;
 
-	// 1. 모든 게시글 조회
+	// 모든 게시글 조회
 	@GetMapping
     public Page<Board> getBoards(
-            @RequestParam(defaultValue = "1") int page,          // 기본 페이지 번호: 1
-            @RequestParam(defaultValue = "10") int size,         // 기본 페이지 크기: 10
-            @RequestParam(defaultValue = "id") String sortBy,  // 기본 정렬 기준
+            @RequestParam(defaultValue = "1") int page,                 // 기본 페이지 번호: 1
+            @RequestParam(defaultValue = "10") int size,                // 기본 페이지 크기: 10
+            @RequestParam(defaultValue = "id") String sortBy,           // 기본 정렬 기준
             @RequestParam(defaultValue = "asc") String sortDirection    // 기본 정렬 방향: 내림차순
     ) {
         return boardService.getBoards(page, size, sortBy, sortDirection);
     }
 
-	// 2. 특정 게시글 조회
+	// 특정 게시글 조회
 	@GetMapping("/{id}")
 	public Board getBoardById(@PathVariable Long id) {
 		Board board = boardService.getBoardById(id);
@@ -55,13 +53,7 @@ public class BoardController {
 		return boardService.getBoardById(id);
 	}
 
-//	// 3. 특정 회원의 게시글 조회
-//	@GetMapping("/member/{memberId}")
-//	public List<Board> getBoardsByMember(@PathVariable String memberId) {
-//		return boardService.getBoardsByMember(memberId);
-//	}
-
-	// 4. 게시글 생성
+	// 게시글 생성
 	@PostMapping
 	public Board createBoard(@RequestBody Board board, @RequestParam String username) {
 		// Member 객체는 MemberService에서 가져온다고 가정
@@ -75,13 +67,13 @@ public class BoardController {
 		return boardService.createBoard(board, member);
 	}
 
-	// 5. 게시글 수정
+	// 게시글 수정
 	@PutMapping("/{id}")
 	public Board updateBoard(@PathVariable Long id, @RequestBody Board updatedBoard) {
 		return boardService.updateBoard(id, updatedBoard);
 	}
 
-	// 6. 게시글 삭제
+	// 게시글 삭제
 	@DeleteMapping("/{id}")
 	public void deleteBoard(@PathVariable Long id) {
 		boardService.deleteBoard(id);
