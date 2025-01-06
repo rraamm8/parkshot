@@ -20,7 +20,6 @@
   text-align: center;
 }
 
-/* 검색창 스타일 */
 .board-search {
   display: flex;
   justify-content: flex-end;

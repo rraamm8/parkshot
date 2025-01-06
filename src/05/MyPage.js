@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -19,7 +18,6 @@ const localizer = dateFnsLocalizer({
 function MyPage() {
   const [userInfo, setUserInfo] = useState({ email: "" });
   const [reservations, setReservations] = useState([]); // 예약 목록
-  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -39,7 +37,18 @@ function MyPage() {
 
     fetch(`http://10.125.121.226:8080/reservations/${storedUsername}`)
       .then((response) => response.json())
-      .then((data) => setReservations(data || []))
+      .then((data) => {
+        const sortedData = (data || []).sort((a, b) => {
+          // 날짜와 시간 기준 내림차순 정렬
+          const dateComparison =
+            new Date(a.reservationDate) - new Date(b.reservationDate);
+          if (dateComparison !== 0) {
+            return dateComparison;
+          }
+          return a.reservationTime.localeCompare(b.reservationTime);
+        });
+        setReservations(sortedData);
+      })
       .catch((error) => console.error("Error fetching reservations:", error));
   }, []);
 
@@ -81,12 +90,6 @@ function MyPage() {
       {/* 사용자 정보 표시 */}
       <div className="mypage-info">
         <p><strong>이메일:</strong> {userInfo.email}</p>
-        <button
-          className="mypage-password-button"
-          onClick={() => navigate("/change-password")}
-        >
-          비밀번호 변경
-        </button>
       </div>
 
       {/* 기존 예약 내역 테이블 */}
