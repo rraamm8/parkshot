@@ -3,15 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "./MyPage.css";
 
 function MyPage() {
-
   const [userInfo, setUserInfo] = useState({ email: "" });
-
   const [reservations, setReservations] = useState([]); // 예약 목록
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
-
 
     console.log("Stored values from localStorage:", { storedUsername }); // 디버깅
 
@@ -31,7 +28,18 @@ function MyPage() {
 
     fetch(`http://10.125.121.226:8080/reservations/${storedUsername}`)
       .then((response) => response.json())
-      .then((data) => setReservations(data || []))
+      .then((data) => {
+        const sortedData = (data || []).sort((a, b) => {
+          // 날짜와 시간 기준 내림차순 정렬
+          const dateComparison =
+            new Date(a.reservationDate) - new Date(b.reservationDate);
+          if (dateComparison !== 0) {
+            return dateComparison;
+          }
+          return a.reservationTime.localeCompare(b.reservationTime);
+        });
+        setReservations(sortedData);
+      })
       .catch((error) => console.error("Error fetching reservations:", error));
   }, []);
 
@@ -42,7 +50,9 @@ function MyPage() {
       .then((response) => {
         if (response.ok) {
           setReservations((prevReservations) =>
-            prevReservations.filter((reservation) => reservation.reservationId !== reservationId)
+            prevReservations.filter(
+              (reservation) => reservation.reservationId !== reservationId
+            )
           );
           alert("예약이 삭제되었습니다.");
         } else {
@@ -56,15 +66,16 @@ function MyPage() {
   };
 
   console.log("Rendering userInfo:", userInfo); // 렌더링 중 상태 확인
-  
+
   return (
     <div className="mypage-container">
       <h1 className="mypage-title">마이페이지</h1>
 
       {/* 사용자 정보 표시 */}
       <div className="mypage-info">
-
-        <p><strong>이메일:</strong> {userInfo.email}</p>
+        <p>
+          <strong>이메일:</strong> {userInfo.email}
+        </p>
 
         <button
           className="mypage-password-button"
@@ -115,4 +126,3 @@ function MyPage() {
 }
 
 export default MyPage;
-

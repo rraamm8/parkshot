@@ -25,7 +25,7 @@ public class JWTUtil {
 	}
 
 	public static String getClaim(String token) {
-		// 토큰에 담긴 정보 중key가 “username”인 데이터 가져오기
+		// 토큰에 담긴 정보 중 key가 “username”인 데이터 가져오기
 		String tok = getJWTSource(token);
 		return JWT.require(Algorithm.HMAC256(JWT_KEY)).build().verify(tok).getClaim(claimName).asString();
 	}

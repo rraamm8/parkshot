@@ -20,12 +20,7 @@ public class HoleController {
     public List<Hole> getallHoles() {
         return holeService.getHoles();
     }
-    
-//    @GetMapping("/hole/{id}")
-//    public String getHolesById(@PathVariable Integer id){
-//    	return holeService.getHoleById(id);
-//    }
-//    
+
     @GetMapping("/hole/{courseId}")
     public List<Hole> findByCourseId(@PathVariable Integer courseId) {
         return holeService.findByCourseId(courseId);

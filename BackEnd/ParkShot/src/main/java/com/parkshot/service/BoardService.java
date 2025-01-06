@@ -1,7 +1,5 @@
 package com.parkshot.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,31 +19,26 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepo;
 	
+	// 정렬 방향 설정 (ASC 또는 DESC)
 	public Page<Board> getBoards(int page, int size, String sortBy, String sortDirection) {
-        // 정렬 방향 설정 (ASC 또는 DESC)
         Sort sort = sortDirection.equalsIgnoreCase("desc") 
                     ? Sort.by(sortBy).descending() 
                     : Sort.by(sortBy).ascending();
 
-        // Pageable 객체 생성
         Pageable pageable = PageRequest.of(page - 1, size, sort);
 
         // 페이징된 결과 반환
         return boardRepo.findAll(pageable);
     }
 
-    // 2. 특정 게시글 조회
+    // 특정 게시글 조회
     public Board getBoardById(Long id) {
         return boardRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + id));
     }
 
-//    // 3. 특정 회원의 게시글 조회
-//    public List<Board> getBoardsByMember(String memberId) {
-//        return boardRepo.findByMember(memberId);
-//    }
 
-    // 4. 게시글 생성
+    // 게시글 생성
     @Transactional
     public Board createBoard(Board board, Member member) {
         board.setMember(member); // Member 객체 설정
@@ -57,7 +50,7 @@ public class BoardService {
         return boardRepo.save(board);
     }
 
-    // 5. 게시글 수정
+    // 게시글 수정
     @Transactional
     public Board updateBoard(Long id, Board updatedBoard) {
         Board board = boardRepo.findById(id)
@@ -68,7 +61,7 @@ public class BoardService {
         return boardRepo.save(board);
     }
 
-    // 6. 게시글 삭제
+    // 게시글 삭제
     @Transactional
     public void deleteBoard(Long id) {
         if (!boardRepo.existsById(id)) {
