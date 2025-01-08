@@ -7,8 +7,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -59,7 +57,8 @@ public class SecurityConfig {
 		http.addFilterBefore(new JWTAuthorizationFilter(memberRepo), AuthorizationFilter.class);
 
 		// OAuth2 로그인 핸들러
-		http.oauth2Login(oauth2 -> oauth2.successHandler(successHandler));
+		http.oauth2Login(oauth2 -> oauth2
+				.successHandler(successHandler));
 
 		return http.build();
 	}
