@@ -75,7 +75,7 @@ function LoginInput({ setLoggedIn }) {
       navigate("/member");
     } catch (error) {
       console.error("Error during login:", error);
-      alert("로그인 중 오류가 발생했습니다.");
+      alert("이메일 또는 비밀번호가 틀렸습니다.");
     }
   };
 
