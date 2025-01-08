@@ -37,7 +37,6 @@ public class BoardService {
                 .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다. ID: " + id));
     }
 
-
     // 게시글 생성
     @Transactional
     public Board createBoard(Board board, Member member) {
