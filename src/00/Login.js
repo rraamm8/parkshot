@@ -5,7 +5,7 @@ import "./SignUp.css";
 function Login() {
   const handleOAuthLogin = async (provider) => {
     try {
-      const oauthUrl = `http://10.125.121.226:8080/oauth2/authorization/${provider}`;
+      const oauthUrl = `http://localhost:8080/oauth2/authorization/${provider}`;
       // OAuth 인증 URL로 이동
       window.location.href = oauthUrl;
     } catch (error) {

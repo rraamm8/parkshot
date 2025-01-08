@@ -136,7 +136,7 @@ function App() {
         </main>
 
         <footer>
-          <p>K-digital 8기 미니프로젝트</p>
+          <p>K-digital 8기 미니프로젝트 - FE:이가람 | BE:정원영</p>
         </footer>
       </div>
     </BrowserRouter>

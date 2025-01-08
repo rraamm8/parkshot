@@ -105,7 +105,7 @@ function SignUp2() {
     }
 
     if (password !== confirmPassword) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
+      alert("비밀번호가 일치하지 않습니다.");
       return;
     }
 
