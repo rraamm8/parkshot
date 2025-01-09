@@ -4,7 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-/BackEnd/ParkShot/src/main/resources/.application.properties
+.env
+/BackEnd/ParkShot/src/main/resources/application.properties
 
 # testing
 /coverage
