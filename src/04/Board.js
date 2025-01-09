@@ -93,7 +93,7 @@ function Board() {
         </button>
 
         {/* 페이지 번호 리스트 */}
-        {Array.from({ length: 10 }, (_, index) => index + 1 + Math.floor((currentPage - 1) / 10) * 10)
+        {Array.from({ length: 5 }, (_, index) => index + 1 + Math.floor((currentPage - 1) / 5) * 5)
           .filter((page) => page <= totalPages) // 총 페이지를 초과하지 않도록 필터링
           .map((page) => (
             <button
