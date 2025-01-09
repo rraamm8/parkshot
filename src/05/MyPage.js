@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Calendar as BigCalendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfWeek, getDay } from "date-fns";
+import { ko } from "date-fns/locale"; // 한국어 locale 가져오기
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./MyPage.css";
 
 const locales = {
-  "en-US": require("date-fns/locale/en-US"),
+  ko: ko,
 };
+
 const localizer = dateFnsLocalizer({
   format,
   parse,
   startOfWeek,
-  getDay,
+  getDay: (date) => getDay(date, { locale: ko }),
   locales,
 });
 
@@ -140,7 +142,36 @@ function MyPage() {
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500 }}
-          onSelectEvent={(event) => alert(`예약 상세: ${event.title}\n시간: ${event.reservationTime}`)}
+          messages={{
+            previous: "◀이전",
+            today: "오늘",
+            next: "다음▶",
+            month: "달력",
+            week: "주간",
+            day: "일간",
+            agenda: "예약내역",
+            agendaHeader: "예약 내역", // 예약 내역 보기 헤더
+            date: "날짜", // 컬럼명 Date → 날짜
+            time: "시간", // 컬럼명 Time → 시간
+            event: "이벤트", // 컬럼명 Event → 이벤트
+            noEventsInRange: "선택한 기간에 예약 내역이 없습니다.",
+          }}
+          formats={{
+            dateFormat: "d", // 날짜 (1, 2, 3 등 숫자)
+            dayFormat: (date) => format(date, "eee", { locale: ko }), // 월, 화, 수 (짧은 요일)
+            dayHeaderFormat: (date) => format(date, "M월 d일 (eeee)", { locale: ko }), // 1월 1일 (월요일)
+            monthHeaderFormat: (date) => format(date, "yyyy년 M월", { locale: ko }), // 2025년 1월
+            dayRangeHeaderFormat: ({ start, end }) =>
+              `${format(start, "M월 d일", { locale: ko })} - ${format(end, "M월 d일", {
+                locale: ko,
+              })}`, // 1월 1일 - 1월 7일
+            weekdayFormat: (date) => format(date, "eee", { locale: ko }), // 월, 화, 수 (달력 상단 요일)
+            agendaDateFormat: (date) => format(date, "M월 d일 (eeee)", { locale: ko }), // 예약 내역 날짜 포맷
+            agendaTimeFormat: (date) => format(date, "HH:mm", { locale: ko }), // 예약 내역 시간 포맷 (24시간제)
+          }}
+          onSelectEvent={(event) =>
+            alert(`예약 상세: ${event.title}\n시간: ${event.reservationTime}`)
+          }
         />
       </div>
     </div>

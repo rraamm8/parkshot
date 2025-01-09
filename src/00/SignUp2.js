@@ -19,6 +19,13 @@ function SignUp2() {
       return;
     }
 
+    // 이메일 형식 검증
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+    if (!emailRegex.test(username)) {
+      alert("올바른 이메일 형식을 입력해주세요. 예: example@domain.com");
+      return;
+    }
+
     try {
       const response = await fetch(
         `http://10.125.121.226:8080/member/checkUsername?username=${username}`
