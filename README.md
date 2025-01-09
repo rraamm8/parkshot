@@ -1,4 +1,4 @@
-# MINIPROJECT_PARKSHOT
+# MINiPROJECT_PARKSHOT
 부산대학교 SW개발자 양성과정 8회차 7조 미니프로젝트입니다.
 ## :golf:프로젝트 소개
 * MINIPROJECT_PARKSHOT은 전국 파크골퍼들에게 골프장과 예약서비스를 제공합니다.
