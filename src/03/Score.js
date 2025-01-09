@@ -52,32 +52,32 @@ function Score() {
 
   const handleSearch = () => {
     const normalizedSearchInput = searchInput.trim();
-  
+
     const results = golfCourses.filter((course) => {
       const normalizedName = course.name.trim();
       const normalizedLocation = course.location.trim();
       const normalizedRegion = course.region?.trim() || ""; // region이 없을 수도 있으므로 기본값 추가
-  
+
       const isLocationMatch =
         normalizedLocation.includes(normalizedSearchInput) ||
         normalizedLocation.startsWith(normalizedSearchInput);
-  
+
       const isRegionMatch =
         normalizedRegion.includes(normalizedSearchInput) ||
         normalizedRegion.startsWith(normalizedSearchInput);
-  
+
       return (
         normalizedName.includes(normalizedSearchInput) ||
         isLocationMatch ||
         isRegionMatch
       );
     });
-  
+
     setHoles([]);
 
     setSearchResults(results);
     setFilteredCourses(results);
-  
+
     if (results.length === 0) {
       alert("검색된 결과가 없습니다.");
     }
@@ -128,7 +128,11 @@ function Score() {
       </div>
 
       {/* 검색 결과 표시 */}
-      <div className={`score-search-results ${searchResults.length > 0 ? "visible" : ""}`}>
+      <div
+        className={`score-search-results ${
+          searchResults.length > 0 ? "visible" : ""
+        }`}
+      >
         {searchResults.map((result, index) => (
           <div
             key={index}
@@ -173,12 +177,6 @@ function Score() {
                       <td>Par</td>
                       {holesByName.map((hole, index) => (
                         <td key={index}>{hole.par}</td>
-                      ))}
-                    </tr>
-                    <tr>
-                      <td>My Score</td>
-                      {holesByName.map((hole, index) => (
-                        <td key={index}></td>
                       ))}
                     </tr>
                     <tr>
