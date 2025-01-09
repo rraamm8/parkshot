@@ -11,7 +11,9 @@ function Board() {
 
   // 데이터 가져오기
   const fetchPosts = (page) => {
-    fetch(`http://10.125.121.226:8080/boards?page=${page}&size=${postsPerPage}&sortBy=id&sortDirection=desc`)
+    fetch(
+      `http://10.125.121.226:8080/boards?page=${page}&size=${postsPerPage}&sortBy=id&sortDirection=desc`
+    )
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.content || []); // content 배열에 게시글 저장
