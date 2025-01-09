@@ -10,7 +10,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100%;
-  align-items: start;
+  align-items: center;
   padding: 50px;
   overflow: hidden;
 }
