@@ -26,6 +26,30 @@ const Reserve = () => {
   const timePickerRef = useRef(null); // 시간 선택 섹션
   const confirmButtonRef = useRef(null); // 예약 버튼 섹션
 
+  // 페이지 첫 로드 시 스크롤 초기화
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);  
+
+  // 날짜 선택 시 시간 선택 섹션으로 스크롤
+  useEffect(() => {
+    if (selectedCourse && selectedDate && timePickerRef.current) {
+      setTimeout(() => {
+        timePickerRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100); // 레이아웃 안정 후 실행
+    }
+  }, [selectedDate, selectedCourse]);
+  
+  useEffect(() => {
+    // 페이지 경로가 변경될 때 상태 초기화
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setSelectedCourse(null);
+  }, [location.pathname]); // 페이지 경로 변경 시 실행
+
   const handleBackToList = () => {
     navigate("/reserve", { replace: true });
     setSelectedCourse(null); // 상태 초기화
