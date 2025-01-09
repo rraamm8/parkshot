@@ -52,7 +52,7 @@ function BoardEdit() {
 
   return (
     <div className="w-4/5 mx-auto font-sans">
-      <h1 className="text-2xl font-bold mb-5 text-center">게시글 수정</h1>
+      <h1 className="board-title p-4">게시글 수정</h1>
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
         <input
           type="text"
