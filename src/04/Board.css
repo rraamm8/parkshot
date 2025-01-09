@@ -165,3 +165,38 @@
 .board-list-button:hover {
   background-color: #2263ca;
 }
+
+.board-pagination-button {
+  /* margin: 0 2px; */
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.board-pagination-button:hover {
+  background-color: #e0e0e0;
+}
+
+.board-pagination-active {
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.board-pagination-before,
+.board-pagination-after {
+  /* margin: 0 2px; */
+  padding: 5px 10px;
+  background-color: #d3d3d3;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.board-pagination-before:hover,
+.board-pagination-after:hover {
+  background-color: #e0e0e0;
+}

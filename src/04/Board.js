@@ -74,29 +74,58 @@ function Board() {
         </tbody>
       </table>
       <div className="board-pagination">
-        {/* 이전 버튼 */}
+        {/* 처음 버튼 */}
         <button
           className="board-pagination-button"
+          onClick={() => handlePageChange(1)}
+          disabled={currentPage === 1}
+        >
+          처음
+        </button>
+
+        {/* 이전 버튼 */}
+        <button
+          className="board-pagination-before"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
-          이전
+          ◀이전
         </button>
 
-        {/* 페이지 번호 표시 */}
-        <span>
-          {currentPage} page / {totalPages} pages
-        </span>
+        {/* 페이지 번호 리스트 */}
+        {Array.from({ length: 10 }, (_, index) => index + 1 + Math.floor((currentPage - 1) / 10) * 10)
+          .filter((page) => page <= totalPages) // 총 페이지를 초과하지 않도록 필터링
+          .map((page) => (
+            <button
+              key={page}
+              className={`board-pagination-button ${currentPage === page ? "board-pagination-active" : ""
+                }`}
+              onClick={() => handlePageChange(page)}
+            >
+              {page}
+            </button>
+          ))}
 
         {/* 다음 버튼 */}
         <button
-          className="board-pagination-button"
+          className="board-pagination-after"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
-          다음
+          다음▶
+        </button>
+
+        {/* 끝 버튼 */}
+        <button
+          className="board-pagination-button"
+          onClick={() => handlePageChange(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          끝
         </button>
       </div>
+
+
     </div>
   );
 }
