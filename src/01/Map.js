@@ -12,6 +12,7 @@ function Map() {
   const navermaps = useNavermaps();
   const [searchParams] = useSearchParams();
   const [area, setArea] = useState(null);
+  const [zoom, setZoom] = useState(16); // 추가: 줌 레벨 상태 관리
   const [searchInput, setSearchInput] = useState(""); // 검색 입력 값
   const [searchResults, setSearchResults] = useState([]); // 검색 결과
   const [golfCourses, setGolfCourses] = useState([]); // 전체 골프장 데이터
@@ -26,7 +27,6 @@ function Map() {
     if (query && isDataLoaded) {
       setSearchInput(query); // 검색어를 상태에 저장
       handleSearch(query); // 데이터 로드 이후 검색 실행
-
     }
   }, [searchParams, isDataLoaded]); // 의존성: 검색 파라미터와 데이터 로드 상태
 
@@ -34,8 +34,8 @@ function Map() {
   const normalizedGolfCourses = golfCourses.map((course) => ({
     ...course,
     normalizedName: course.name.trim(), // 공백 제거
-    normalizedRegion: course.region.trim(), 
-    normalizedLocation: course.location.trim(), 
+    normalizedRegion: course.region.trim(),
+    normalizedLocation: course.location.trim(),
   }));
 
   // 검색 실행 함수
@@ -45,10 +45,11 @@ function Map() {
     const normalizedSearchTerm = query.trim(); // 입력된 검색어에서 공백 제거
 
     // 미리 정규화된 데이터를 사용해 검색 결과 필터링
-    const results = normalizedGolfCourses.filter((course) =>
-      course.normalizedName.includes(normalizedSearchTerm) || 
-      course.normalizedRegion.includes(normalizedSearchTerm) || 
-      course.normalizedLocation.includes(normalizedSearchTerm) 
+    const results = normalizedGolfCourses.filter(
+      (course) =>
+        course.normalizedName.includes(normalizedSearchTerm) ||
+        course.normalizedRegion.includes(normalizedSearchTerm) ||
+        course.normalizedLocation.includes(normalizedSearchTerm)
     );
 
     // 필터링된 결과를 상태에 저장
@@ -59,13 +60,13 @@ function Map() {
       alert("검색된 결과가 없습니다."); // 검색 결과 없음 알림
     } else {
       setArea(results[0].location); // 검색 결과 중 첫 번째 항목의 위치를 지도에 반영
+      setZoom(15); // 추가: 검색 결과를 클릭하면 줌 레벨 변경
     }
   };
 
   // 예약 버튼 클릭 시 실행 함수
   const handleReservationClick = (course) => {
     navigate(`/reserve/${course.courseId}`); // URL에 courseId 추가해서 전달
-
   };
 
   // 주소를 지오코딩
@@ -81,11 +82,10 @@ function Map() {
           status === navermaps.Service.Status.OK &&
           response.v2.addresses.length > 0
         ) {
-          // const { x, y } = response.v2.addresses[0]; // 주소의 위도, 경도 추출
-          // resolve({ lat: parseFloat(y), lng: parseFloat(x) }); // 지오코딩 결과 반환
+          const { x, y } = response.v2.addresses[0]; // 주소의 위도, 경도 추출
+          resolve({ lat: parseFloat(y), lng: parseFloat(x) }); // 지오코딩 결과 반환
         } else {
-          // console.error(`Failed to geocode address: ${address}`); // 지오코딩 실패
-          // resolve(null);
+          resolve(null);
         }
       });
     });
@@ -140,7 +140,7 @@ function Map() {
         <h1 className="p-4">코스찾기</h1>
       </div>
       <MapDiv className="map-wrapper">
-        <MyMap area={area} markers={markers} /> {/* MyMap 컴포넌트 렌더링 */}
+        <MyMap area={area} markers={markers} zoom={zoom} /> {/* 줌 레벨 전달 */}
       </MapDiv>
       {/* 검색 필드와 버튼 */}
       <div className="search-container">
@@ -168,8 +168,8 @@ function Map() {
               key={index}
               className="search-result-item"
               onClick={(e) => {
-                // e.preventDefault();
                 setArea(result.location); // 클릭한 결과의 위치를 설정
+                setZoom(15); // 추가: 줌 레벨 변경
                 console.log(result.location); // 디버깅용 콘솔 출력
               }}
               style={{ cursor: "pointer" }}

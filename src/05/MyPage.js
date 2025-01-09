@@ -77,14 +77,48 @@ function MyPage() {
       });
   };
 
+  // 랜덤 색상을 생성하는 함수
+  const generateColor = (id) => {
+    // 10가지 고정 색상 정의
+    const colors = [
+      "#66023c", // 붉은색
+      "#186158", // 녹색
+      "#023c66", // 하늘색
+      "#b8646a", // 핑크색
+      "#daa520", // 노란색
+      "#088da5", // 청록색
+      "#660066", // 보라색
+      "#0a75ad", // 파란색
+      "#20b2aa", // 민트색
+      "#ff7f50", // 주황색
+    ];
+  
+    if (typeof id !== "number") {
+      return "#cccccc"; // 기본 색상 (id가 유효하지 않을 때)
+    }
+  
+    // 색상 배열에서 %10 결과값으로 색상 선택
+    return colors[id % 10];
+  };
+
   // 예약 데이터를 react-big-calendar 형식으로 변환
-  const events = reservations.map((reservation) => ({
-    title: reservation.courseId.name,
-    start: new Date(reservation.reservationDate + "T" + reservation.reservationTime),
-    end: new Date(reservation.reservationDate + "T" + reservation.reservationTime),
-    id: reservation.reservationId,
-    reservationTime: reservation.reservationTime, // 예약 시간 추가
-  }));
+  const events = reservations.map((reservation) => {
+    const courseId = reservation.courseId?.courseId || 0; // courseId 추출 및 기본값 설정
+    console.log("CourseId (숫자):", courseId); // 디버깅용 로그
+    return {
+      title: reservation.courseId?.name || "골프장 이름 없음", // 골프장 이름
+      start: new Date(
+        reservation.reservationDate + "T" + reservation.reservationTime
+      ),
+      end: new Date(
+        reservation.reservationDate + "T" + reservation.reservationTime
+      ),
+      id: reservation.reservationId, // 예약 ID
+      reservationTime: reservation.reservationTime, // 예약 시간
+      courseId, // courseId 저장
+      color: generateColor(courseId), // 색상 생성
+    };
+  });     
 
   return (
     <div className="mypage-container">
@@ -159,15 +193,31 @@ function MyPage() {
           formats={{
             dateFormat: "d", // 날짜 (1, 2, 3 등 숫자)
             dayFormat: (date) => format(date, "eee", { locale: ko }), // 월, 화, 수 (짧은 요일)
-            dayHeaderFormat: (date) => format(date, "M월 d일 (eeee)", { locale: ko }), // 1월 1일 (월요일)
-            monthHeaderFormat: (date) => format(date, "yyyy년 M월", { locale: ko }), // 2025년 1월
+            dayHeaderFormat: (date) =>
+              format(date, "M월 d일 (eeee)", { locale: ko }), // 1월 1일 (월요일)
+            monthHeaderFormat: (date) =>
+              format(date, "yyyy년 M월", { locale: ko }), // 2025년 1월
             dayRangeHeaderFormat: ({ start, end }) =>
-              `${format(start, "M월 d일", { locale: ko })} - ${format(end, "M월 d일", {
-                locale: ko,
-              })}`, // 1월 1일 - 1월 7일
-            weekdayFormat: (date) => format(date, "eee", { locale: ko }), // 월, 화, 수 (달력 상단 요일)
-            agendaDateFormat: (date) => format(date, "M월 d일 (eeee)", { locale: ko }), // 예약 내역 날짜 포맷
-            agendaTimeFormat: (date) => format(date, "HH:mm", { locale: ko }), // 예약 내역 시간 포맷 (24시간제)
+              `${format(start, "M월 d일", { locale: ko })} - ${format(
+                end,
+                "M월 d일",
+                { locale: ko }
+              )}`, // 1월 1일 - 1월 7일
+            weekdayFormat: (date) =>
+              format(date, "eee", { locale: ko }), // 월, 화, 수 (달력 상단 요일)
+            agendaDateFormat: (date) =>
+              format(date, "M월 d일 (eeee)", { locale: ko }), // 예약 내역 날짜 포맷
+            agendaTimeFormat: (date) =>
+              format(date, "HH:mm", { locale: ko }), // 예약 내역 시간 포맷 (24시간제)
+          }}
+          eventPropGetter={(event) => {
+            console.log(event.color); // 색상 확인
+            return {
+              style: {
+                backgroundColor: event.color,
+                color: "white", // 가독성을 위한 텍스트 색상
+              },
+            };
           }}
           onSelectEvent={(event) =>
             alert(`예약 상세: ${event.title}\n시간: ${event.reservationTime}`)

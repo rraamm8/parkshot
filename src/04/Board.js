@@ -56,7 +56,7 @@ function Board() {
         <tbody>
           {posts.map((post, index) => (
             <tr key={post.id}>
-              <td>{index + 1 + (currentPage - 1) * postsPerPage}</td>
+              <td>{post.id}</td>
               <td>
                 <Link to={`/board/${post.id}`} className="board-link">
                   {post.title}

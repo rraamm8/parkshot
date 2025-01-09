@@ -6,11 +6,10 @@ import {
 } from "react-naver-maps";
 import { useState, useEffect } from "react";
 
-export default function MyMap({ area, markers }) {
+export default function MyMap({ area, markers, zoom }) {
   const navermaps = useNavermaps();
   const [map, setMap] = useState(null);
   const [markerPosition, setMarkerPosition] = useState(null);
-  // console.log("markers : ", markers);
 
   const fetchGeocode = async (address) => {
     if (!navermaps?.Service?.geocode) {
@@ -40,18 +39,19 @@ export default function MyMap({ area, markers }) {
         const position = await fetchGeocode(area);
         if (position && map) {
           map.setCenter(new navermaps.LatLng(position.lat, position.lng));
+          map.setZoom(zoom); // 추가: 줌 레벨 변경
           setMarkerPosition(new navermaps.LatLng(position.lat, position.lng));
         }
       }
     };
     loadGeocode();
-  }, [area, map]); // area와 map이 변경될 때마다 실행
+  }, [area, map, zoom]); // area, map, zoom이 변경될 때마다 실행
 
   return (
     <>
       <NaverMap
         defaultCenter={new navermaps.LatLng(35.2333798, 129.0798453)}
-        defaultZoom={16}
+        defaultZoom={14}
         ref={setMap}
       >
         {markers.map((marker, index) => (
