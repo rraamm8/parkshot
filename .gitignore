@@ -5,7 +5,6 @@
 /.pnp
 .pnp.js
 .env
-/BackEnd/ParkShot/src/main/resources/application.properties
 
 # testing
 /coverage
