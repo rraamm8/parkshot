@@ -18,8 +18,6 @@ import BoardWrite from "./04/BoardWrite";
 import BoardView from "./04/BoardView";
 import BoardEdit from "./04/BoardEdit";
 import MyPage from "./05/MyPage";
-import ChangePW from "./05/ChangePW";
-import Contact from "./06/Contact";
 
 // NavBar 컴포넌트
 function NavBar({ loggedIn, setLoggedIn }) {
@@ -130,8 +128,6 @@ function App() {
             <Route path="/board/edit/:id" element={<BoardEdit />} />
             <Route path="/score" element={<Score />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/change-password" element={<ChangePW />} />
-            <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
 
